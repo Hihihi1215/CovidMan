@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import SignIn from './SignIn';
 import Home from './Home';
+import SelectOrganisation from './SelectOrganisation';
 
 function App() {
   return (
@@ -20,6 +21,11 @@ function App() {
           <Route path='/SignIn' element={
             <>
               <SignIn/>
+            </>
+          }/>
+          <Route path='/SelectOrg' element={
+            <>
+              <SelectOrganisation/>
             </>
           }/>
         </Routes>
