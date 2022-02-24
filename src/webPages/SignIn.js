@@ -1,9 +1,11 @@
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
 import { Button, FloatingLabel, Form, InputGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import '../css/SignIn.css'
+import { auth } from '../firebase'
 
 function SignIn() {
 
@@ -19,7 +21,7 @@ function SignIn() {
     }
     if(username) {
       usernameFilled();
-    } 
+    }
     if(password) {
       passwordFilled();
     }
@@ -40,8 +42,47 @@ function SignIn() {
       const passwordInput = passwordBlank();
       passwordInput.focus();
     } else {
-      navigate('/');
+      e.preventDefault();
+      signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate('/');
+        })
+        .catch((error) => {
+          const code = error.code;
+          if(code.indexOf('email') != -1){
+            invalidUsername();
+          } else {
+            invalidPassword();
+          }
+        })
     }
+  }
+
+  const invalidPassword = () => {
+    const passwordTooltip2 = document.querySelector('#password-tooltip2');
+    const passwordInput = document.querySelector('#password-input');
+    passwordInput.value = '';
+    passwordInput.focus();
+    passwordTooltip2.style.display = 'block';
+    passwordTooltip2.style.animation = 'fadeOut 0.4s 3.65s ease-out';
+    setTimeout(() => {
+      passwordTooltip2.style.display = 'none';
+    }, 4000);
+  }
+
+  const invalidUsername = () => {
+    const usernameTooltip2 = document.querySelector('#username-tooltip2');
+    const usernameInput = document.querySelector('#username-input');
+    usernameInput.value = '';
+    usernameInput.focus();
+    usernameTooltip2.style.display = 'block';
+    usernameTooltip2.style.animation = 'fadeOut 0.4s 3.65s ease-out';
+    setTimeout(() => {
+      usernameTooltip2.style.display = 'none';
+    }, 4000);
   }
 
   const passwordFilled = () => {
@@ -50,7 +91,14 @@ function SignIn() {
     passwordInput.style = `
       box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
       border: 1px solid #85BFA4;
+      animation : inputBoxGreenFadeout 0.4s 3.65s ease-out;
     `;
+    setTimeout(() => {
+      passwordInput.style = `
+        box-shadow: none;
+        border: 1px solid #ced4da;
+      `;
+    }, 4000);
     passwordTooltip.style.display = 'none';
   }
 
@@ -60,7 +108,14 @@ function SignIn() {
     usernameInput.style = `
       box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
       border: 1px solid #85BFA4;
+      animation : inputBoxGreenFadeout 0.4s 3.65s ease-out;
     `;
+    setTimeout(() => {
+      usernameInput.style = `
+        box-shadow: none;
+        border: 1px solid #ced4da;
+      `;
+    }, 4000);
     usernameTooltip.style.display = 'none';
   }
 
@@ -112,6 +167,13 @@ function SignIn() {
               id='username-tooltip'>
               Please fill in the username
             </Form.Control.Feedback>
+            <Form.Control.Feedback
+              type='invalid'
+              tooltip
+              id='username-tooltip2'
+              >
+              Invalid username
+            </Form.Control.Feedback>
           </InputGroup>
           <InputGroup hasValidation>
             <InputGroup.Text>
@@ -131,6 +193,13 @@ function SignIn() {
               tooltip
               id='password-tooltip'>
               Please fill in the password
+            </Form.Control.Feedback>
+            <Form.Control.Feedback
+              type='invalid'
+              tooltip
+              id='password-tooltip2'
+              >
+              Invalid password
             </Form.Control.Feedback>
           </InputGroup>
           <Button 

@@ -65,8 +65,22 @@ form {
   font-weight: bold;
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 .invalid-tooltip {
   right: 0;
+}
+
+#username-tooltip2 {
+  transition: 1s ease-in-out;
 }
 
 @media screen and (min-width: 1200px) {
@@ -76,5 +90,17 @@ form {
     position: absolute;
     height: 80vh;
     justify-content: center;
+  }
+}
+
+@keyframes inputBoxGreenFadeout {
+  from {
+    box-shadow: 0.5px 0.5px 0.5px 4px #c5e1d4;
+    border: 1px solid #85bfa4;
+  }
+
+  to {
+    box-shadow: none;
+    border: 1px solid #ced4da;
   }
 }
