@@ -156,8 +156,10 @@ function SignIn() {
               <Form.Control
                 id="username-input"
                 placeholder='Username'
+                type='text'
                 required
                 onChange={handleChange}
+                autoComplete='off'
                 />
               <label className='input-label'>Username</label>
             </Form.Floating>
@@ -185,6 +187,7 @@ function SignIn() {
                 placeholder='Password'
                 type='password'
                 onChange={handleChange}
+                autoComplete='off'
               />
               <label className='input-label'>Password</label>
             </Form.Floating>
