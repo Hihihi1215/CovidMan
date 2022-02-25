@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom
 import SignIn from './SignIn';
 import Home from './Home';
 import SelectOrganisation from './SelectOrganisation';
+import RegisterAidApplicant from './RegisterAidApplicant';
 
 function App() {
   return (
@@ -26,6 +27,11 @@ function App() {
           <Route path='/SelectOrg' element={
             <>
               <SelectOrganisation/>
+            </>
+          }/>
+          <Route path='/RegisterApp' element={
+            <>
+              <RegisterAidApplicant/>
             </>
           }/>
         </Routes>

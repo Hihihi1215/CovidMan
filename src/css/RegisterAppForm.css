@@ -1,0 +1,19 @@
+.register-appFormWrapper {
+  background-color: white;
+  width: 350px;
+  border-radius: 15px;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.register-appFormWrapper > h4 {
+  margin: 15px 0;
+}
+
+.register-appFormWrapper > h5 {
+  margin: 15px 0;
+}

@@ -33,7 +33,7 @@ function SelectOrganisation() {
             {
                 organisations.map((organisation) => {
                     return (
-                        <Link to='/' className='links'>
+                        <Link to='/RegisterApp' className='links'>
                             <OrganisationCard
                                 orgName={organisation.orgName}
                                 orgAddress={organisation.orgAddress}/>
