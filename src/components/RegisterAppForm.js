@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import '../css/RegisterAppForm.css'
 import FormControl from './FormControl'
+import Dropzone from './Dropzone'
+import RegisterAppFormPagination from './RegisterAppFormPagination'
 
 function RegisterAppForm() {
 
@@ -13,6 +15,45 @@ function RegisterAppForm() {
     const [ address, setAddress ] = useState('');
     const idRegex = /\d{6}-\d{2}-\d{4}/;
     const emailRegex = /\w+@\w+.com/;
+    const numRegex = /^\d+$/;
+    const appFormNavigation = (nextOrPrev) => {
+        const nextBtn = document.querySelector('#next-btn');
+        const prevBtn = document.querySelector('#prev-btn');
+        const form1 = document.querySelector('.form1');
+        const form2 = document.querySelector('.form2');
+        if(nextOrPrev === 'next'){
+            nextBtn.classList.toggle('pagination-fadeOut');
+            prevBtn.classList.toggle('pagination-fadeIn');
+            form1.style.display = 'none';
+            form2.style.display = 'flex';
+            setTimeout(() => {
+                nextBtn.style = `
+                    pointer-events : none;
+                    cursor : default;
+                `
+                prevBtn.style = `
+                    pointer-events : auto;
+                    cursor : pointer;
+                `
+                
+            },200)
+        } else if(nextOrPrev === 'prev'){
+            nextBtn.classList.toggle('pagination-fadeOut');
+            prevBtn.classList.toggle('pagination-fadeIn');
+            setTimeout(() => {
+                nextBtn.style = `
+                    pointer-events : auto;
+                    cursor : pointer;
+                `
+                prevBtn.style = `
+                    pointer-events : none;
+                    cursor : default;
+                `
+            },200)
+            form1.style.display = 'block';
+            form2.style.display = 'none';
+        }
+    }
 
     const inputBlank = (inputGroupName) => {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
@@ -41,12 +82,14 @@ function RegisterAppForm() {
                 inputBlank('address')
             }
         } else {
-            if(!idRegex.test(id) || !emailRegex.test(email)){
+            if(!idRegex.test(id) || !emailRegex.test(email) || !numRegex.test(income.toString())){
                 e.preventDefault();
                 if(!idRegex.test(id)){
                     inputBlank('id');
                 } else if(!emailRegex.test(email)){
                     inputBlank('email');
+                } else if(!numRegex.test(income.toString())){
+                    inputBlank('income');
                 }
             }
         }
@@ -60,7 +103,7 @@ function RegisterAppForm() {
             noValidate
             onSubmit={handleSubmit}
             >
-            <div className='form1'>
+            <div className='forms form1'>
                 <FormControl
                     icon={faUser}
                     input='name'
@@ -88,8 +131,15 @@ function RegisterAppForm() {
                     setInput={setAddress}
                 />
             </div>
-            <Button type='submit'>Submit</Button>
+            <div className='forms form2'>
+                <h6>Upload Proof of Household Income</h6>
+                <Dropzone/>
+            </div>
+            <Button type='submit'>Register</Button>
         </Form>
+        <RegisterAppFormPagination
+                appFormNavigation={appFormNavigation}
+            /> 
     </div>
   )
 }

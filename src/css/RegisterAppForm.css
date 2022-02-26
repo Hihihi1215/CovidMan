@@ -8,6 +8,7 @@
   align-items: center;
   padding: 15px;
   margin: 0 auto;
+  position: relative;
 }
 
 .register-appFormWrapper > h4 {
@@ -16,4 +17,15 @@
 
 .register-appFormWrapper > h5 {
   margin: 15px 0;
+}
+
+.forms {
+  width: 90%;
+}
+
+.form2 {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
 }
