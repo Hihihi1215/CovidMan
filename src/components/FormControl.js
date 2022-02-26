@@ -10,13 +10,14 @@ function FormControl(props) {
             return ' in the format of XXXXXX-XX-XXXX';
         } else if(props.input === 'email'){
             return ' in the format of xxx@xxx.com';
+        } else if(props.input === 'income'){
+            return ' that is not negative'
         }
     }
 
     const inputFilled = () => {
         const tooltip = document.querySelector(`#${props.input}-tooltip`);
         const formControl = document.querySelector(`#${props.input}-input`);
-        console.table(formControl);
         formControl.style = `
             box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
             border: 1px solid #85BFA4;

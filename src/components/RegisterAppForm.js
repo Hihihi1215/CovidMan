@@ -13,6 +13,7 @@ function RegisterAppForm() {
     const [ address, setAddress ] = useState('');
     const idRegex = /\d{6}-\d{2}-\d{4}/;
     const emailRegex = /\w+@\w+.com/;
+    const numRegex = /^\d+$/;
 
     const inputBlank = (inputGroupName) => {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
@@ -27,6 +28,7 @@ function RegisterAppForm() {
     }
 
     const handleSubmit = e => {
+        console.log(income.toString())
         if(!name || !id || !income || !address || !email){
             e.preventDefault();
             if(!name) {
@@ -41,12 +43,15 @@ function RegisterAppForm() {
                 inputBlank('address')
             }
         } else {
-            if(!idRegex.test(id) || !emailRegex.test(email)){
+            if(!idRegex.test(id) || !emailRegex.test(email) || !numRegex.test(income.toString())){
                 e.preventDefault();
                 if(!idRegex.test(id)){
                     inputBlank('id');
                 } else if(!emailRegex.test(email)){
                     inputBlank('email');
+                } else if(!numRegex.test(income.toString())){
+                    console.log(income)
+                    inputBlank('income');
                 }
             }
         }
@@ -60,7 +65,7 @@ function RegisterAppForm() {
             noValidate
             onSubmit={handleSubmit}
             >
-            <div className='form1'>
+            <div className='forms form1'>
                 <FormControl
                     icon={faUser}
                     input='name'
@@ -88,7 +93,13 @@ function RegisterAppForm() {
                     setInput={setAddress}
                 />
             </div>
-            <Button type='submit'>Submit</Button>
+            <div className='forms form2'>
+                <h6>Upload Proof of Household Income</h6>
+            </div>
+            <div className='pagination-btnWrapper'>
+                <Button id='prev-btn' className='pagination-btn'>Previous</Button>
+                <Button id='next-btn' className='pagination-btn'>Next</Button>
+            </div>
         </Form>
     </div>
   )
