@@ -1,3 +1,7 @@
-textarea {
-  height: 100px !important;
+.input-group {
+  height: 54px;
+}
+
+.input-group-text {
+  height: 58px;
 }

@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,3 +29,13 @@ export { auth, signInWithEmailAndPassword };
 
 // Firestore
 export const db = getFirestore();
+
+// Checking for duplicate id or email from users collection
+export const checkDuplicateUser = async (id, email) => {
+  const usersRef = collection(db, "users");
+  const q1 = query(usersRef, where("IDno", "==", id));
+  const q2 = query(usersRef, where("email", "==", email))
+  const querySnapshot1 = await getDocs(q1);
+  const querySnapshot2 = await getDocs(q2);
+  return (querySnapshot1.docs.length > 0 || querySnapshot2.docs.length > 0);
+}

@@ -5,7 +5,6 @@ import '../css/RegisterAppFormPagination.css'
 function RegisterAppFormPagination(props) {
 
     const handlePaginationClick = e => {
-        console.log(e.target.id);
         if(e.target.id === 'prev-btn'){
             props.appFormNavigation('prev');
         } else if(e.target.id === 'next-btn'){
