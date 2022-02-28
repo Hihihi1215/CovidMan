@@ -1,0 +1,20 @@
+.register-appValidation {
+  font-size: 0.875rem;
+  color: #fff;
+  background-color: rgba(220, 53, 69, 0.9);
+  border-radius: 0.25rem;
+  max-width: 80%;
+  max-height: 45px;
+  line-height: 15px;
+  padding: 0.25rem 0.5rem;
+  z-index: 5;
+  bottom: 11.5%;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  cursor: default;
+}
+
+.register-appValidation.register-appValidationFadeIn {
+  opacity: 1;
+}

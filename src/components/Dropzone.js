@@ -1,13 +1,21 @@
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
 import '../css/Dropzone.css'
 import pdfImage from '../img/pdf-image.png';
 
-function Dropzone() {
+function Dropzone(props) {
 
-    const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ accept: '.pdf'});
+    const onDrop = useCallback((acceptedFiles) => {
+        const validation = document.querySelector('.register-appValidation');
+        props.setInvalid('');
+        if(props.invalid){
+            validation.classList.toggle('register-appValidationFadeIn');
+        }
+        props.setFiles(acceptedFiles);
+    });
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ accept: '.pdf', onDrop});
     const files = acceptedFiles.map(file => (
         <li key={file.path} className='uploaded-fileItem'>
             <img
