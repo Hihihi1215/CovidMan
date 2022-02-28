@@ -6,6 +6,7 @@ import SignIn from './SignIn';
 import Home from './Home';
 import SelectOrganisation from './SelectOrganisation';
 import RegisterAidApplicant from './RegisterAidApplicant';
+import RegisterCovidManAdmin from './RegisterCovidManAdmin';
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
               <RegisterAidApplicant/>
             </>
           }/>
+          <Route path='/RegisterAdmin' element={
+            <>
+            <RegisterCovidManAdmin/>
+            </>
+        }/>
         </Routes>
       </div>
     </Router>
