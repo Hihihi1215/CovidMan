@@ -6,9 +6,9 @@ import FormControl from './FormControl'
 import Dropzone from './Dropzone'
 import RegisterAppFormPagination from './RegisterAppFormPagination'
 import RegisterAppValidation from './RegisterAppValidation'
-import { checkDuplicateUser } from '../firebase'
+import { checkDuplicateUser, createAidApplicant } from '../firebase'
 
-function RegisterAppForm() {
+function RegisterAppForm(props) {
 
     const [ mobileNo, setMobileNo ] = useState('');
     const [ name, setName ] = useState('');
@@ -17,6 +17,7 @@ function RegisterAppForm() {
     const [ email, setEmail ] = useState('');
     const [ address, setAddress ] = useState('');
     const [ invalid, setInvalid ] = useState('');
+    const [ duplicate, setDuplicate ] = useState('');
     const [ files, setFiles ] = useState([]);
     const idRegex = /\d{6}-\d{2}-\d{4}/;
     const emailRegex = /\w+@\w+.com/;
@@ -38,10 +39,6 @@ function RegisterAppForm() {
         const registerBtn = document.querySelector('.register-btn')
         const form1 = document.querySelector('.form1');
         const form2 = document.querySelector('.form2');
-        const validation = document.querySelector('.register-appValidation');
-        if(invalid){
-            validation.classList.toggle('register-appValidationFadeIn');
-        }
         if(nextOrPrev === 'next'){
             nextBtn.classList.toggle('pagination-fadeOut');
             prevBtn.classList.toggle('pagination-fadeIn');
@@ -89,19 +86,38 @@ function RegisterAppForm() {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
         const input = document.querySelector(`#${inputGroupName}-input`);
         const validation = document.querySelector('.register-appValidation');
+        setInvalid(inputGroupName);
+        validation.classList.toggle('register-appValidationFadeIn');
+        setTimeout(() => {
+            validation.classList.toggle('register-appValidationFadeIn');
+        }, 2000);
         input.style = `
             box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
             border: 1px solid #E66D7A;
         `;
         tooltip.style.display = 'block';
         input.value = '';
-        input.focus();
-        setInvalid(inputGroupName);
+    }
+
+    const duplicateInput = (duplicate) => {
+        setDuplicate(duplicate);
+        const tooltip = document.querySelector(`#${duplicate}-tooltip3`);
+        const input = document.querySelector(`#${duplicate}-input`);
+        const validation = document.querySelector('.register-appValidation');
         validation.classList.toggle('register-appValidationFadeIn');
+        setTimeout(() => {
+            validation.classList.toggle('register-appValidationFadeIn');
+        }, 2000);
+        input.style = `
+            box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
+            border: 1px solid #E66D7A;
+        `;
+        tooltip.style.display = 'block';
+        input.value = '';
     }
 
     const handleSubmit = e => {
-        if(!name || !id || !income || !address || !email || files.length == 0 || !mobileNo){
+        if(!name || !id || !income || !address || !mobileNo || !email || files.length == 0){
             e.preventDefault();
             if(!name) {
                 inputBlank('name');
@@ -111,14 +127,12 @@ function RegisterAppForm() {
                 inputBlank('income')
             } else if(!email) {
                 inputBlank('email')
+            } else if(!mobileNo){
+                inputBlank('mobileNo');
             } else if(!address) {
                 inputBlank('address')
             } else if(files.length == 0) {
-                const validation = document.querySelector('.register-appValidation');
-                setInvalid('file');
-                validation.classList.toggle('register-appValidationFadeIn');
-            } else if(!mobileNo){
-                inputBlank('mobileNo');
+                inputBlank('file');
             }
         } else {
             let incomeError = testIncome(income);
@@ -128,23 +142,22 @@ function RegisterAppForm() {
                     inputBlank('id');
                 } else if(!emailRegex.test(email)){
                     inputBlank('email');
-                } else if(incomeError){
-                    inputBlank('income');
                 } else if(!mobileNoRegex.test(mobileNo)){
                     inputBlank('mobileNo');
+                } else if(incomeError){
+                    inputBlank('income');
                 }
             } else {
                 e.preventDefault();
-                var duplicateOrNot = 0;
                 checkDuplicateUser(id, email)
-                    .then(res => {
-                        duplicateOrNot = res;
-                    });
-                if(duplicateOrNot){
-                    console.log('its a duplicate');
-                } else {
-                    console.log('lmao');
-                }
+                        .then((duplicateOrNot) => {
+                            if(duplicateOrNot){
+                                duplicateInput(duplicateOrNot);
+                            } else {
+                                createAidApplicant(name, id, income, email, mobileNo, address, files);
+                                props.setModalShow(true);
+                            }
+                        });
             }
         }
     }
@@ -163,30 +176,40 @@ function RegisterAppForm() {
                     input='name'
                     setInput={setName}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
                 <FormControl
                     icon={faIdCard}
                     input='id'
                     setInput={setId}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
                 <FormControl
                     icon={faDollarSign}
                     input='income'
                     setInput = {setIncome}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
                 <FormControl
                     icon={faMobileScreenButton}
                     input='email'
                     setInput={setEmail}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
                 <FormControl
                     icon={faEnvelope}
                     input='mobileNo'
                     setInput={setMobileNo}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
                 <FormControl
                     icon={faHouse}
@@ -194,13 +217,15 @@ function RegisterAppForm() {
                     as='textarea'
                     setInput={setAddress}
                     setInvalid={setInvalid}
+                    setDuplicate={setDuplicate}
+                    duplicate = {duplicate}
                 />
             </div>
             <div className='forms form2'>
                 <h6>Upload Proof of Household Income</h6>
                 <Dropzone setFiles={setFiles} setInvalid={setInvalid} invalid={invalid}/>
             </div>
-            <RegisterAppValidation invalid={invalid}/>
+            <RegisterAppValidation invalid={invalid} duplicate={duplicate}/>
             <Button type='submit' className='register-btn'>Register</Button>
         </Form>
         <RegisterAppFormPagination

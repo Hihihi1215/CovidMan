@@ -8,11 +8,6 @@ import pdfImage from '../img/pdf-image.png';
 function Dropzone(props) {
 
     const onDrop = useCallback((acceptedFiles) => {
-        const validation = document.querySelector('.register-appValidation');
-        props.setInvalid('');
-        if(props.invalid){
-            validation.classList.toggle('register-appValidationFadeIn');
-        }
         props.setFiles(acceptedFiles);
     });
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ accept: '.pdf', onDrop});
