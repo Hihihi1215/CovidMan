@@ -7,6 +7,7 @@ import Home from './Home';
 import SelectOrganisation from './SelectOrganisation';
 import RegisterAidApplicant from './RegisterAidApplicant';
 import AidAppConfirmationModal from '../components/AidAppConfirmationModal';
+import RegisterCovidManAdmin from './RegisterCovidManAdmin';
 
 function App() {
 
@@ -42,6 +43,11 @@ function App() {
               <AidAppConfirmationModal/>
             </>
           }/>
+          <Route path='/RegisterAdmin' element={
+            <>
+            <RegisterCovidManAdmin/>
+            </>
+        }/>
         </Routes>
       </div>
     </Router>

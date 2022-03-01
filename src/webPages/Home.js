@@ -12,6 +12,9 @@ function Home() {
         <Link to='/SelectOrg'>
           <Button variant="outline-primary">To Select Org</Button>
         </Link>
+        <Link to="/RegisterAdmin">
+          <Button variant="outline-primary">To Sign Up</Button>
+        </Link>
     </div>
   )
 }
