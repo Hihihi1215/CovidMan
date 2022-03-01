@@ -12,7 +12,7 @@ function SelectOrganisation() {
 
     useEffect(() => {
         const getOrganisations = async() => {
-            const querySnapshot = await getDocs(collection(db, "organisation"));
+            const querySnapshot = await getDocs(collection(db, "organisations"));
             setOrganisations(querySnapshot.docs.map((doc) => (
                 {
                     ...doc.data(),
@@ -33,7 +33,9 @@ function SelectOrganisation() {
             {
                 organisations.map((organisation) => {
                     return (
-                        <Link to='/RegisterApp' className='links'>
+                        <Link 
+                            to={`/RegisterApp/${organisation.orgName},${organisation.id}`}
+                            className='links'>
                             <OrganisationCard
                                 orgName={organisation.orgName}
                                 orgAddress={organisation.orgAddress}/>
