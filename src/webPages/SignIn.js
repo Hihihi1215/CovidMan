@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { Button, FloatingLabel, Form, InputGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import '../css/SignIn.css'
-import { auth } from '../firebase'
+import { auth, getUserByUID } from '../firebase'
 
 function SignIn() {
 
@@ -47,8 +47,14 @@ function SignIn() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate('/');
+          const firestoreUser = getUserByUID(user.uid);
+          firestoreUser.then((res) => {
+            if(res.userType === 'orgRep'){
+              navigate(`/RegisterApp/${user.uid},${false}`);
+            } else {
+              invalidUsername();
+            }
+          })
         })
         .catch((error) => {
           const code = error.code;
@@ -76,6 +82,10 @@ function SignIn() {
   const invalidUsername = () => {
     const usernameTooltip2 = document.querySelector('#username-tooltip2');
     const usernameInput = document.querySelector('#username-input');
+    usernameInput.style = `
+      box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
+      border: 1px solid #E66D7A;
+    `;
     usernameInput.value = '';
     usernameInput.focus();
     usernameTooltip2.style.display = 'block';

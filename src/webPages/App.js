@@ -6,8 +6,14 @@ import SignIn from './SignIn';
 import Home from './Home';
 import SelectOrganisation from './SelectOrganisation';
 import RegisterAidApplicant from './RegisterAidApplicant';
+import AidAppConfirmationModal from '../components/AidAppConfirmationModal';
 
 function App() {
+
+  const showModal = () => {
+    const modal = document.querySelector('.confirmation-modal');
+    modal.classList.add('confirmation-modalShow');
+  }
 
   return (
     <Router>
@@ -30,9 +36,10 @@ function App() {
               <SelectOrganisation/>
             </>
           }/>
-          <Route path='/RegisterApp' element={
+          <Route path='/RegisterApp/:orgName,:orgDocID' element={
             <>
-              <RegisterAidApplicant/>
+              <RegisterAidApplicant showModal={showModal}/>
+              <AidAppConfirmationModal/>
             </>
           }/>
         </Routes>

@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
@@ -12,13 +12,13 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA8DJAL3kqnbI-vT1c0KWj6KwrT-0IinA4",
-  authDomain: "covid-man.firebaseapp.com",
-  projectId: "covid-man",
-  storageBucket: "covid-man.appspot.com",
-  messagingSenderId: "430034293725",
-  appId: "1:430034293725:web:fb1519fdb6be2199a21c34",
-  measurementId: "G-DR31VVHH4K"
+  apiKey: "AIzaSyCQY_1-Wb8Kl_i3MvjNEOQertpZ_bRt_B4",
+  authDomain: "covid-man-a9a98.firebaseapp.com",
+  projectId: "covid-man-a9a98",
+  storageBucket: "covid-man-a9a98.appspot.com",
+  messagingSenderId: "338516074338",
+  appId: "1:338516074338:web:49a4a3c6aa41364c99563b",
+  measurementId: "G-373LKM4X4W"
 };
 
 // Initialize Firebase
@@ -63,32 +63,66 @@ export const checkDuplicateUser = async (id, email) => {
   }
 }
 
-const addUser = async (name, id, income, email, mobileNo, address, password, uid) => {
+const addAidApplicant = async (name, id, income, email, mobileNo, address, password, uid, orgDocID) => {
   await setDoc(doc(db, "users", uid), {
     IDno: id,
     email: email,
     fullname: name,
     householdIncome: income,
     mobileNo: mobileNo,
-    orgID: "adqdqwqw",
     password: password,
     residentialAddress: address,
     userType: "aidApplicant",
-    username: password
+    username: password,
+    orgDocID : orgDocID
+  });
+}
+
+export const getUserByUID = async (uid) => {
+  const docRef = doc(db, "users", uid)
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
+export const getOrgByDocID = async (orgDocID) => {
+  const docRef = doc(db, "organisations", orgDocID)
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
+const addAidApplicantToOrg = async (orgDocID, uid) => {
+
+  const orgRef = doc(db, "organisations", orgDocID)
+  await updateDoc(orgRef, {
+    aidApplicants : arrayUnion(uid)
   });
 }
 
 // Registering an Aid Applicant
-export const createAidApplicant = (name, id, income, email, mobileNo, address, files) => {
+export const createAidApplicant = (name, id, income, email, mobileNo, address, files, orgDocID) => {
   const indexOfAt = email.indexOf("@");
   const password = email.substring(0, indexOfAt);
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const uid = userCredential.user.uid;
-      addUser(name, id, income, email, mobileNo, address, password, uid);
-      uploadFiles(id, files);
+      addAidApplicant(name, id, income, email, mobileNo, address, password, uid, orgDocID);
+      uploadFiles(uid, files);
+      console.log('hi');
+      addAidApplicantToOrg(orgDocID, uid);
 
-      sendEmail(name, password, password, email)
+      sendEmail(name, email, password, email)
         .then((res) => {
           console.log('Please check your mail box for your username and password');
         })
@@ -99,7 +133,7 @@ export const createAidApplicant = (name, id, income, email, mobileNo, address, f
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
+      console.log(error.code + " " + errorMessage);
       // ..
     });
 }
