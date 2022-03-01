@@ -1,4 +1,4 @@
-import {faEnvelope, faUser, faIdCard, faMobile} from '@fortawesome/free-solid-svg-icons'
+import {faEnvelope, faUser, faIdCard, faMobileScreenButton} from '@fortawesome/free-solid-svg-icons'
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import '../css/RegisterAdminForm.css'
@@ -27,18 +27,18 @@ function RegisterAdminForm(){
         if(!name || !email || !mobileNo || !adminNo){
             e.preventDefault();
             if(!name){
-                inputBlank("name");
+                inputBlank('name');
             }else if(!email){
-                inputBlank("email");
+                inputBlank('email');
             }else if(!mobileNo){
-                inputBlank("mobileNo");
+                inputBlank('mobileNo');
             }else if(!adminNo){
-                inputBlank("adminNo");
+                inputBlank('adminNo');
             }
         }else{
             if(!emailRegex.test(email)){
                 e.preventDefault();
-                inputBlank("email")
+                inputBlank('email')
             }
         }
     }
@@ -53,26 +53,26 @@ function RegisterAdminForm(){
             <div>
             <FormControl
                 icon={faUser}
-                input="name"
+                input='name'
                 setInput={setName}
             />
             <FormControl
                 icon={faEnvelope}
-                input="email"
+                input='email'
                 setInput={setEmail}
             />
             <FormControl
-                icon={faMobile}
-                input="mobileNo"
+                icon={faMobileScreenButton}
+                input='mobileNo'
                 setInput={setMobileNo}
             />
             <FormControl
                 icon={faIdCard}
-                input="adminNo"
+                input='adminNo'
                 setInput={setAdminNo}
             />
             </div>
-            <Button type="submit">Register</Button>
+            <Button type='submit'>Register</Button>
         </Form>
     </div>
    )
