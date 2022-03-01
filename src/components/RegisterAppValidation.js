@@ -23,9 +23,21 @@ function RegisterAppValidation(props) {
             `Please fill in a valid ${props.invalid}`
     }
 
+    const validationOrDuplicate = () => {
+        if(props.duplicate){
+            if(props.duplicate === 'id'){
+                return 'There is already an existing user with the same ID'
+            } else {
+                return 'There is already an existing user with the same email'
+            }
+        } else {
+            return fileOrNot();
+        }
+    }
+
   return (
     <div className='register-appValidation'>
-        {fileOrNot()} {registerAppInvalidFormat()}
+        {validationOrDuplicate()} {registerAppInvalidFormat()}
     </div>
   )
 }

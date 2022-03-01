@@ -17,8 +17,15 @@ function FormControl(props) {
         }
     }
 
-    const inputFilled = () => {
-        const tooltip = document.querySelector(`#${props.input}-tooltip`);
+    const inputFilled = e => {
+        let tooltip = 'hi';
+        props.setInput(e.target.value);
+        if(props.duplicate){
+            tooltip = document.querySelector(`#${props.input}-tooltip3`);
+        } else {
+            tooltip = document.querySelector(`#${props.input}-tooltip`);
+        }
+        tooltip.style.display = 'none';
         const formControl = document.querySelector(`#${props.input}-input`);
         formControl.style = `
             box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
@@ -31,13 +38,10 @@ function FormControl(props) {
                 border: 1px solid #ced4da;
             `;
         }, 4000);
-        tooltip.style.display = 'none';
     }
 
     const handleChange = e => {
-        props.setInput(e.target.value);
-        inputFilled();
-        props.setInvalid('');
+        inputFilled(e);
     }
 
     const capitalize = (word) => {
@@ -88,6 +92,13 @@ function FormControl(props) {
             id={`${props.input}-tooltip2`}
             >
             Invalid username
+        </Form.Control.Feedback>
+        <Form.Control.Feedback
+            type='invalid'
+            tooltip
+            id={`${props.input}-tooltip3`}
+            >
+            There is an existing user with the same {props.duplicate}
         </Form.Control.Feedback>
     </InputGroup>
   )
