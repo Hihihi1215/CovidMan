@@ -9,6 +9,7 @@
   padding: 15px;
   margin: 0 auto;
   position: relative;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .register-appFormWrapper > h4 {
@@ -17,6 +18,13 @@
 
 .register-appFormWrapper > h5 {
   margin: 15px 0;
+}
+
+@media screen and (min-width: 1200px) {
+  .register-appFormWrapper {
+    margin: 0;
+    left: 67.5%;
+  }
 }
 
 .forms {
@@ -28,4 +36,17 @@
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+}
+
+.register-btn {
+  position: absolute;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.register-btn.register-btnFadeIn {
+  opacity: 1;
 }
