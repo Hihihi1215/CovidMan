@@ -46,3 +46,15 @@
 .card-img-top {
   height: 80px;
 }
+
+.organisation-card:hover .card-img-top{
+  height: 10px;
+}
+
+.organization-address{
+  visibility: hidden;
+}
+
+.organisation-card:hover .organization-address{
+  visibility: visible;
+}

@@ -7,6 +7,7 @@ import Home from './Home';
 import SelectOrganisation from './SelectOrganisation';
 import RegisterAidApplicant from './RegisterAidApplicant';
 import RegisterCovidManAdmin from './RegisterCovidManAdmin';
+import ManageOrganization from './ManageOrganization';
 
 function App() {
   return (
@@ -39,7 +40,12 @@ function App() {
             <>
             <RegisterCovidManAdmin/>
             </>
-        }/>
+          }/>
+          <Route path='/ManageOrg' element={
+            <>
+            <ManageOrganization/>
+            </>
+          }/>
         </Routes>
       </div>
     </Router>

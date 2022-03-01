@@ -15,6 +15,9 @@ function Home() {
         <Link to="/RegisterAdmin">
           <Button variant="outline-primary">To Sign Up</Button>
         </Link>
+        <Link to="/ManageOrg">
+          <Button variant="outline-primary">To Manage Org</Button>
+        </Link>
     </div>
   )
 }
