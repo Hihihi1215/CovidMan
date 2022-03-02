@@ -3,8 +3,8 @@ import '../css/ManageOrganization.css'
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
-import { Button } from "react-bootstrap";
-import OrganisationCard from '../components/OrganisationCard';
+import OrganisationCard from '../components/OrganisationCard'
+import Container from "../components/Container";
 
 function ManageOrganization(){
 
@@ -12,7 +12,7 @@ function ManageOrganization(){
 
     useEffect(() => {
         const getOrganisations = async() => {
-            const querySnapshot = await getDocs(collection(db, "organisation"));
+            const querySnapshot = await getDocs(collection(db, "organisations"));
             setOrganisations(querySnapshot.docs.map((doc) => (
                 {
                     ...doc.data(),
@@ -28,18 +28,17 @@ function ManageOrganization(){
         <div className="manage-organization">
             <div className="manage-organizationHeader">
                 <h1>Manage Organization</h1>
-                <Button className="btn-addOrganization">Add New Organization</Button>
+                <div className="btn-addOrganization">
+                    <Container eventType='add-organization' 
+                        buttonText='Add New Organization'/>
+                </div>
             </div>
             <div className="manage-organizationBody">
                 {
                     organisations.map((organisation) => {
                         return (
-                            <Link to='/' className='links'>
-                                <OrganisationCard
-                                    orgID={organisation.orgID}
-                                    orgName={organisation.orgName}
-                                    orgAddress={organisation.orgAddress}/>
-                            </Link>
+                            <Container eventType='register-organizationRep'
+                                org={organisation}/>
                         )  
                     })
                 }

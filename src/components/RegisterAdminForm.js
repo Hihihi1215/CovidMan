@@ -10,6 +10,7 @@ function RegisterAdminForm(){
     const [ mobileNo, setMobileNo ] = useState('');
     const [ adminNo, setAdminNo ] = useState('');
     const emailRegex = /\w+@\w+.com/;
+    const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;
 
     const inputBlank = (inputGroupName) => {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
@@ -36,9 +37,13 @@ function RegisterAdminForm(){
                 inputBlank('adminNo');
             }
         }else{
-            if(!emailRegex.test(email)){
+            if(!emailRegex.test(email) || !mobileNoRegex.test(mobileNo)){
                 e.preventDefault();
-                inputBlank('email')
+                if(!emailRegex.test(email)){
+                    inputBlank('email')
+                }else if(!mobileNoRegex.test(mobileNo)){
+                    inputBlank('mobileNo')
+                }
             }
         }
     }

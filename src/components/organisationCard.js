@@ -5,7 +5,8 @@ import '../css/OrganisationCard.css'
 
 function OrganisationCard(props) {
   return (
-    <div className='organisation-card'>
+    <div className='organisation-card'
+      onClick={props.onClick}>
         <Card>
             <Card.Img variant="top" src={blue} />
             <Card.Body>
