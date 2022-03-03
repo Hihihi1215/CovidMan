@@ -1,11 +1,13 @@
 import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import RegisterAppForm from '../components/RegisterAppForm'
 import '../css/RegisterAidApplicant.css'
 
 function RegisterAidApplicant(props) {
 
-  const { orgName, orgDocID } = useParams();
+  const location = useLocation();
+  const locationState = location.state;
+  const { orgName, orgDocID } = locationState;
 
   const blurThePage = () => {
     const registerAidApplicant = document.querySelector('.register-aidApplicant');

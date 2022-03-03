@@ -6,6 +6,7 @@ import { arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "fireba
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { passwordGenerator } from "./PasswordGenerator";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -110,16 +111,18 @@ const addAidApplicantToOrg = async (orgDocID, uid) => {
   });
 }
 
+// Jen Password Generator
+// var jen = new Jen(true, true);
+
 // Registering an Aid Applicant
 export const createAidApplicant = (name, id, income, email, mobileNo, address, files, orgDocID) => {
-  const indexOfAt = email.indexOf("@");
-  const password = email.substring(0, indexOfAt);
+  // const password = jen.password(30);
+  const password = passwordGenerator();
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const uid = userCredential.user.uid;
       addAidApplicant(name, id, income, email, mobileNo, address, password, uid, orgDocID);
       uploadFiles(uid, files);
-      console.log('hi');
       addAidApplicantToOrg(orgDocID, uid);
 
       sendEmail(name, email, password, email)

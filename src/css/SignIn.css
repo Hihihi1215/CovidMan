@@ -28,6 +28,26 @@
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
+.fade-in {
+  animation: fade-in-left 0.5s ease-in;
+}
+
+.sign-inFormInputs {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fade-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 form {
   width: 100%;
   display: flex;

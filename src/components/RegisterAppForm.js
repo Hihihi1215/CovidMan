@@ -1,12 +1,12 @@
 import { faDollarSign, faEnvelope, faHouse, faIdCard, faMobileScreenButton, faUser } from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import '../css/RegisterAppForm.css'
 import FormControl from './FormControl'
 import Dropzone from './Dropzone'
 import RegisterAppFormPagination from './RegisterAppFormPagination'
 import RegisterAppValidation from './RegisterAppValidation'
-import { checkDuplicateUser, createAidApplicant, getOrgByDocID, getUserByUID } from '../firebase'
+import { checkDuplicateUser, createAidApplicant } from '../firebase'
 
 function RegisterAppForm(props) {
 
@@ -18,8 +18,6 @@ function RegisterAppForm(props) {
     const [ address, setAddress ] = useState('');
     const [ invalid, setInvalid ] = useState('');
     const [ duplicate, setDuplicate ] = useState('');
-    const [ orgDocID, setOrgDocID ] = useState('');
-    const [ orgName, setOrgName ] = useState('');
     const [ files, setFiles ] = useState([]);
 
     const idRegex = /\d{6}-\d{2}-\d{4}/;
@@ -27,9 +25,6 @@ function RegisterAppForm(props) {
     const numRegex = /^[1-9]{1,3}$/;
     const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;    
 
-    useEffect(() => {
-        getOrganisation();
-    }, []);
 
     const testIncome = (theIncome) => {
         if(numRegex.test(theIncome)){
@@ -89,24 +84,6 @@ function RegisterAppForm(props) {
         }
     }
 
-    const getOrganisation = () => {
-        const orgDocID = props.orgDocID;
-        if(orgDocID === 'false'){
-            console.log('hi')
-            const user = getUserByUID(props.orgName);
-            user.then((res) => {
-                setOrgDocID(res.orgDocID)
-                const org = getOrgByDocID(res.orgDocID);
-                org.then((res) => {
-                    setOrgName(res.orgName)
-                })
-            })
-        } else {
-            setOrgName(props.orgName);
-            setOrgDocID(orgDocID);
-        }
-    }
-
     const inputBlank = (inputGroupName) => {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
         const input = document.querySelector(`#${inputGroupName}-input`);
@@ -126,6 +103,7 @@ function RegisterAppForm(props) {
 
     const duplicateInput = (duplicate) => {
         setDuplicate(duplicate);
+        setInvalid(duplicate);
         const tooltip = document.querySelector(`#${duplicate}-tooltip3`);
         const input = document.querySelector(`#${duplicate}-input`);
         const validation = document.querySelector('.register-appValidation');
@@ -182,7 +160,7 @@ function RegisterAppForm(props) {
                                 props.blurThePage();
                                 props.showModal();
                                 props.showCheckMarkAnimation();
-                                createAidApplicant(name, id, income, email, mobileNo, address, files, orgDocID);
+                                createAidApplicant(name, id, income, email, mobileNo, address, files, props.orgDocID);
                             }
                         });
             }
@@ -191,13 +169,13 @@ function RegisterAppForm(props) {
 
   return (
     <div className='register-appFormWrapper'>
-        <h4>{orgName} Organisation</h4>
+        <h4>{props.orgName} Organisation</h4>
         <h5>Register Aid Applicant</h5>
         <Form 
             noValidate
             onSubmit={handleSubmit}
             >
-            <div className='forms form1'>
+            <div className='forms form1 fade-in'>
                 <FormControl
                     icon={faUser}
                     input='name'
@@ -248,7 +226,7 @@ function RegisterAppForm(props) {
                     duplicate = {duplicate}
                 />
             </div>
-            <div className='forms form2'>
+            <div className='forms form2 fade-in'>
                 <h6>Upload Proof of Household Income</h6>
                 <Dropzone setFiles={setFiles} setInvalid={setInvalid} invalid={invalid}/>
             </div>

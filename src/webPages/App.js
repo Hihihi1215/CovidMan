@@ -37,7 +37,7 @@ function App() {
               <SelectOrganisation/>
             </>
           }/>
-          <Route path='/RegisterApp/:orgName,:orgDocID' element={
+          <Route path='/RegisterApp' element={
             <>
               <RegisterAidApplicant showModal={showModal}/>
               <AidAppConfirmationModal/>
