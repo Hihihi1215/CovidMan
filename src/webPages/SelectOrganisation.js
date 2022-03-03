@@ -3,12 +3,16 @@ import OrganisationCard from '../components/OrganisationCard';
 import '../css/SelectOrganisation.css';
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 
 
 function SelectOrganisation() {
 
+    const [ organisationComponents, setOrganisationComponents ] = useState([]);
     const [ organisations, setOrganisations ] = useState([]);
+
+    // console.log(organisationComponents);
 
     useEffect(() => {
         const getOrganisations = async() => {
@@ -19,10 +23,25 @@ function SelectOrganisation() {
                     id : doc.id
                 }
             )));
+            setOrganisationComponents(organisations.map((organisation, i) => {
+                return (
+                    <CSSTransition
+                        key={i}
+                        classNames="org-anim"
+                        timeout={500}>
+                        <OrganisationCard
+                            orgDocID = {organisation.id}
+                            orgName={organisation.orgName}
+                            orgAddress={organisation.orgAddress}/>
+                    </CSSTransition>
+                )
+            }))
         };
 
         getOrganisations();
     }, [organisations]);
+
+    // console.log(organisationComponents);
 
   return (
     <div className='select-organisation'>
@@ -30,19 +49,9 @@ function SelectOrganisation() {
             <h1>Organisations</h1>
         </div>
         <div className='select-organisationBody'>
-            {
-                organisations.map((organisation) => {
-                    return (
-                        <Link 
-                            to={`/RegisterApp/${organisation.orgName},${organisation.id}`}
-                            className='links'>
-                            <OrganisationCard
-                                orgName={organisation.orgName}
-                                orgAddress={organisation.orgAddress}/>
-                        </Link>
-                    )  
-                })
-            }
+            <TransitionGroup component={null}>
+                {organisationComponents}
+            </TransitionGroup>
         </div>
     </div>
   )

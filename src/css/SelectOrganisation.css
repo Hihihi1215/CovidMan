@@ -26,10 +26,6 @@
   }
 }
 
-.links {
-  margin: 25px;
-}
-
 @media screen and (min-width: 768px) {
   .select-organisationBody {
     width: 90%;
@@ -40,9 +36,5 @@
     padding-right: 0;
     overflow-y: scroll;
     height: 550px;
-  }
-
-  .links {
-    margin: 25px 50px 25px 0;
   }
 }

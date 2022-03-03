@@ -2,10 +2,11 @@ import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
-import { Button, FloatingLabel, Form, InputGroup } from 'react-bootstrap'
+import { Button, Form, InputGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 import '../css/SignIn.css'
-import { auth, getUserByUID } from '../firebase'
+import { auth, getOrgByDocID, getUserByUID } from '../firebase'
 
 function SignIn() {
 
@@ -50,7 +51,13 @@ function SignIn() {
           const firestoreUser = getUserByUID(user.uid);
           firestoreUser.then((res) => {
             if(res.userType === 'orgRep'){
-              navigate(`/RegisterApp/${user.uid},${false}`);
+              const orgDocID = res.orgDocID;
+              const org = getOrgByDocID(orgDocID);
+              org.then((res) => {
+                navigate('/RegisterApp', {
+                  state : { orgName : res.orgName, orgDocID : orgDocID }
+                });
+              })
             } else {
               invalidUsername();
             }
@@ -158,36 +165,37 @@ function SignIn() {
         <Form 
           noValidate 
           onSubmit={handleSubmit}>
-          <InputGroup hasValidation>
-            <InputGroup.Text>
-              <FontAwesomeIcon icon={faUser}/>
-            </InputGroup.Text>
-            <Form.Floating>
-              <Form.Control
-                id="username-input"
-                placeholder='Username'
-                type='text'
-                required
-                onChange={handleChange}
-                autoComplete='off'
-                />
-              <label className='input-label'>Username</label>
-            </Form.Floating>
-            <Form.Control.Feedback 
-              type='invalid' 
-              tooltip
-              id='username-tooltip'>
-              Please fill in the username
-            </Form.Control.Feedback>
-            <Form.Control.Feedback
-              type='invalid'
-              tooltip
-              id='username-tooltip2'
-              >
-              Invalid username
-            </Form.Control.Feedback>
-          </InputGroup>
-          <InputGroup hasValidation>
+          <div className='fade-in sign-inFormInputs'>
+            <InputGroup hasValidation>
+              <InputGroup.Text>
+                <FontAwesomeIcon icon={faUser}/>
+              </InputGroup.Text>
+              <Form.Floating>
+                <Form.Control
+                  id="username-input"
+                  placeholder='Username'
+                  type='text'
+                  required
+                  onChange={handleChange}
+                  autoComplete='off'
+                  />
+                <label className='input-label'>Username</label>
+              </Form.Floating>
+              <Form.Control.Feedback 
+                type='invalid' 
+                tooltip
+                id='username-tooltip'>
+                Please fill in the username
+              </Form.Control.Feedback>
+              <Form.Control.Feedback
+                type='invalid'
+                tooltip
+                id='username-tooltip2'
+                >
+                Invalid username
+              </Form.Control.Feedback>
+            </InputGroup>
+            <InputGroup hasValidation>
             <InputGroup.Text>
               <FontAwesomeIcon icon={faKey}/>
             </InputGroup.Text>
@@ -214,7 +222,8 @@ function SignIn() {
               >
               Invalid password
             </Form.Control.Feedback>
-          </InputGroup>
+            </InputGroup>
+          </div>
           <Button 
             type='submit'
             variant='primary'>
