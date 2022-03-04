@@ -20,8 +20,8 @@ function RegisterAppForm(props) {
     const [ duplicate, setDuplicate ] = useState('');
     const [ files, setFiles ] = useState([]);
 
-    const idRegex = /\d{6}-\d{2}-\d{4}/;
-    const emailRegex = /\w+@\w+.com/;
+    const idRegex = /^\d{6}-\d{2}-\d{4}$/;
+    const emailRegex = /^\w+@\w+.com$/;
     const numRegex = /^[0-9]{1,3}$/;
     const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;    
 
@@ -140,10 +140,12 @@ function RegisterAppForm(props) {
         } else {
             let incomeError = testIncome(income);
             if(!idRegex.test(id) || !emailRegex.test(email) || incomeError || !mobileNoRegex.test(mobileNo)){
+                setDuplicate('');
                 e.preventDefault();
                 if(!idRegex.test(id)){
                     inputBlank('id');
-                } else if(!emailRegex.test(email)){
+                } else if(!emailRegex.test(email) || email.indexOf(' ') >= 0){
+                    console.log(email);
                     inputBlank('email');
                 } else if(!mobileNoRegex.test(mobileNo)){
                     inputBlank('mobileNo');
