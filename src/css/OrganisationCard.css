@@ -68,3 +68,15 @@
     margin: 25px 50px 25px 0;
   }
 }
+
+.organisation-card:hover .card-img-top{
+  height: 10px;
+}
+
+.organization-address{
+  visibility: hidden;
+}
+
+.organisation-card:hover .organization-address{
+  visibility: visible;
+}

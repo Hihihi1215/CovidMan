@@ -8,6 +8,8 @@ import SelectOrganisation from './SelectOrganisation';
 import RegisterAidApplicant from './RegisterAidApplicant';
 import AidAppConfirmationModal from '../components/AidAppConfirmationModal';
 import RegisterCovidManAdmin from './RegisterCovidManAdmin';
+import ManageOrganization from './ManageOrganization';
+import AdminConfirmationModal from '../components/AdminConfirmationModal';
 
 function App() {
 
@@ -45,9 +47,15 @@ function App() {
           }/>
           <Route path='/RegisterAdmin' element={
             <>
-            <RegisterCovidManAdmin/>
+              <RegisterCovidManAdmin showModal={showModal}/>
+              <AdminConfirmationModal/>
             </>
-        }/>
+          }/>
+          <Route path='/ManageOrg' element={
+            <>
+              <ManageOrganization/>
+            </>
+          }/>
         </Routes>
       </div>
     </Router>

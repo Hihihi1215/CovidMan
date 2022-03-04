@@ -7,3 +7,7 @@
   display: flex;
   align-items: center;
 }
+
+.register-covidManAdmin.blur {
+  filter: blur(20px);
+}

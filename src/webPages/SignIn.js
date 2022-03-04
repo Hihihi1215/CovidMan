@@ -6,7 +6,8 @@ import { Button, Form, InputGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import '../css/SignIn.css'
-import { auth, getOrgByDocID, getUserByUID } from '../firebase'
+import { auth, getOrgByDocID, getUserByUID, getUserByUsername} from '../firebase'
+
 
 function SignIn() {
 
@@ -44,7 +45,8 @@ function SignIn() {
       passwordInput.focus();
     } else {
       e.preventDefault();
-      signInWithEmailAndPassword(auth, username, password)
+      getUserByUsername(username).then((user) => {
+        signInWithEmailAndPassword(auth, user.email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
@@ -58,7 +60,9 @@ function SignIn() {
                   state : { orgName : res.orgName, orgDocID : orgDocID }
                 });
               })
-            } else {
+            } else if(res.userType === 'covidManAdmin') {
+              navigate(`/ManageOrg`)
+            }else{
               invalidUsername();
             }
           })
@@ -71,6 +75,7 @@ function SignIn() {
             invalidPassword();
           }
         })
+      })
     }
   }
 
