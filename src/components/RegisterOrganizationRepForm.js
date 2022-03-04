@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import '../css/RegisterOrganizationRep.css';
 import {faUser, faEnvelope, faMobileScreenButton,faIdCard, faIdCardClip} from '@fortawesome/free-solid-svg-icons';
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import FormControl from "./FormControl";
 import { checkDuplicateOrgRep, createOrganizationRep } from "../firebase";
 import { confirmAlert } from "react-confirm-alert";
@@ -73,7 +73,8 @@ function RegisterOrganizationRep(props){
                     if(duplicateOrNot){
                         duplicateInput(duplicateOrNot);
                     }else{
-                        showAlertDialog();
+                        props.onShowConfimation()
+                        props.onHide()
                         createOrganizationRep(username, name, email, mobileNo, jobtitle, props.organization.orgID, props.organization.id);
                     }
                 })
@@ -81,7 +82,7 @@ function RegisterOrganizationRep(props){
         }
     }
 
-    const showAlertDialog = () => {
+    /*const showAlertDialog = () => {
         props.closeModal()
         confirmAlert({
             customUI: ({ onClose }) => {
@@ -101,15 +102,22 @@ function RegisterOrganizationRep(props){
             },
             overlayClassName: "modal-area"
           })
-    }
+    }*/
 
     return(
-        <div className="register-organizationRep">
-            <h4>Register Organizaton Representative</h4>
-            <h5>{props.organization.orgName} Organization</h5>
-            <Form
-                noValidate 
-                onSubmit={handleSubmit}>
+        <Modal
+        {...props}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Register Organizaton Representative
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4 className="title">{props.organization.orgName} Organization</h4>
+          <Form noValidat>
                 <div>
                     <FormControl
                         icon={faUser}
@@ -147,9 +155,14 @@ function RegisterOrganizationRep(props){
                         duplicate = {duplicate}
                     />
                 </div>
-                <Button type='submit'>Register</Button>
+                
             </Form>
-        </div>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button onClick={props.onHide} variant="secondary">Close</Button>
+            <Button onClick={handleSubmit} variant="primary">Register</Button>
+        </Modal.Footer>
+      </Modal>
     )
 }
 

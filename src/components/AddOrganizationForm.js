@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Button, Form,InputGroup } from "react-bootstrap";
+import { Button, Form,InputGroup, Modal } from "react-bootstrap";
 import '../css/AddOrganizationForm.css';
 import FormControl from './FormControl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -88,41 +88,43 @@ function AddOrganizationForm(props){
                 if(duplicateOrNot){
                     invalidOrgName();
                 }else{
-                    showAlertDialog();
+                    props.onShowConfimation()
+                    props.onHide()
                     createNewOrganization(orgName, orgAddress)
                 }
             })
         }
     }
 
-    const showAlertDialog = () => {
-        props.closeModal()
+    /*const showAlertDialog = () => {
         confirmAlert({
             customUI: ({ onClose }) => {
               return (
-                  <FocusTrap>
-                    <div className='custom-ui'>
+                   <div className='custom-ui'>
                         <h4>Added Successfully</h4>
                         <p>A new organization has been added successfully</p>
                         <Button onClick={onClose}>OK</Button>
                     </div>
-                  </FocusTrap>
 
               );
             },
-            onClickOutside: () => {
-                this.setShow(false)
-            },
-            overlayClassName: "modal-area"
+            overlayClassName:"model"
           })
-    }
+    }*/
 
     return(
-        <div className="add-organization">
-            <h4>Add New Organization</h4>
-            <Form
-                noValidate 
-                onSubmit={handleSubmit}>
+        <Modal
+        {...props}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Add New Organization
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Form noValidate>
                 <div>
                     <InputGroup hasValidation>
                         <InputGroup.Text>
@@ -139,7 +141,7 @@ function AddOrganizationForm(props){
                             />
                             <label className='input-label'>Name</label>
                         </Form.Floating>
-                    <   Form.Control.Feedback 
+                      <Form.Control.Feedback 
                             type='invalid' 
                             tooltip
                             id='orgName-tooltip'>
@@ -160,10 +162,16 @@ function AddOrganizationForm(props){
                         setInput={setOrgAddress}
                     />
                 </div>
-                <Button type='submit'>Add</Button>
+                
             </Form>
-        </div>
-    )
+        </Modal.Body>
+        <Modal.Footer>
+            <Button onClick={props.onHide} variant="secondary" className="btn">Close</Button>
+            <Button onClick={handleSubmit} variant="primary">Add</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
 }
 
 export default AddOrganizationForm
