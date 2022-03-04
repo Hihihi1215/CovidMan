@@ -6,15 +6,7 @@ import { Button } from "react-bootstrap";
 import '../css/Modal.css';
 import RegisterOrganizationRep from "./RegisterOrganizationRepForm";
 
-function Modal({
-    onClickOutside,
-    onKeyDown,
-    modalRef,
-    buttonRef,
-    closeModal,
-    eventType,
-    organizationName
-}){
+function Modal(props){
     return ReactDOM.createPortal(
         <FocusTrap>
             <aside
@@ -23,16 +15,16 @@ function Modal({
                 tabIndex='-1'
                 aria-modal='true'
                 className="modal-cover"
-                onClick={onClickOutside}
-                onKeyDown={onKeyDown}
+                onClick={props.onClickOutside}
+                onKeyDown={props.onKeyDown}
             >
-                <div className="modal-area" ref={modalRef}>
+                <div className="modal-area" ref={props.modalRef}>
                     <Button
-                        ref={buttonRef}
+                        ref={props.buttonRef}
                         aria-label='Close Model'
                         aria-labelledby="close-modal"
                         className="_modal-close"
-                        onClick={closeModal}
+                        onClick={props.closeModal}
                     >
                         <span id="close-modal" className="_hide-visual">
                             Close
@@ -42,9 +34,9 @@ function Modal({
                         </svg>
                     </Button>
                     <div className="modal-body">
-                        {eventType == 'register-organizationRep'?
-                            <RegisterOrganizationRep orgName={organizationName}/> : 
-                            <AddOrganizationForm />
+                        {props.eventType == 'register-organizationRep'?
+                            <RegisterOrganizationRep organization={props.organization} closeModal={props.closeModal}/> : 
+                            <AddOrganizationForm closeModal={props.closeModal}/>
                         };
                     </div>
                 </div>

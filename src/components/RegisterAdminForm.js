@@ -2,13 +2,15 @@ import {faEnvelope, faUser, faIdCard, faMobileScreenButton} from '@fortawesome/f
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import '../css/RegisterAdminForm.css'
+import { checkDuplicateAdmin, createCovidManAdmin } from '../firebase';
 import FormControl from './FormControl'
 
-function RegisterAdminForm(){
+function RegisterAdminForm(props){
     const [ name, setName ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ mobileNo, setMobileNo ] = useState('');
     const [ adminNo, setAdminNo ] = useState('');
+    const [ duplicate, setDuplicate ] = useState('');
     const emailRegex = /\w+@\w+.com/;
     const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;
 
@@ -22,6 +24,22 @@ function RegisterAdminForm(){
         tooltip.style.display = 'block';
         input.value = '';
         input.focus();
+    }
+
+    const duplicateInput = (duplicate) => {
+        setDuplicate(duplicate);
+        const tooltip = document.querySelector(`#${duplicate}-tooltip3`);
+        const input = document.querySelector(`#${duplicate}-input`);
+        const validation = document.querySelector('.register-appValidation');
+        setTimeout(() => {
+            validation.classList.toggle('register-appValidationFadeIn');
+        }, 2000);
+        input.style = `
+            box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
+            border: 1px solid #E66D7A;
+        `;
+        tooltip.style.display = 'block';
+        input.value = '';
     }
 
     const handleSubmit = e => {
@@ -44,6 +62,19 @@ function RegisterAdminForm(){
                 }else if(!mobileNoRegex.test(mobileNo)){
                     inputBlank('mobileNo')
                 }
+            }else{
+                e.preventDefault();
+                checkDuplicateAdmin(adminNo, email)
+                        .then((duplicateOrNot)=>{
+                            if(duplicateOrNot){
+                                duplicateInput(duplicateOrNot);
+                            } else {
+                                props.blurThePage();
+                                props.showModal();
+                                props.showCheckMarkAnimation();
+                                createCovidManAdmin(adminNo, name, email, mobileNo)
+                            }
+                        })
             }
         }
     }
@@ -57,24 +88,32 @@ function RegisterAdminForm(){
             > 
             <div>
             <FormControl
+                icon={faIdCard}
+                input='adminNo'
+                setInput={setAdminNo}
+                setDuplicate={setDuplicate}
+                duplicate = {duplicate}
+            />
+            <FormControl
                 icon={faUser}
                 input='name'
                 setInput={setName}
+                setDuplicate={setDuplicate}
+                duplicate = {duplicate}
             />
             <FormControl
                 icon={faEnvelope}
                 input='email'
                 setInput={setEmail}
+                setDuplicate={setDuplicate}
+                duplicate = {duplicate}
             />
             <FormControl
                 icon={faMobileScreenButton}
                 input='mobileNo'
                 setInput={setMobileNo}
-            />
-            <FormControl
-                icon={faIdCard}
-                input='adminNo'
-                setInput={setAdminNo}
+                setDuplicate={setDuplicate}
+                duplicate = {duplicate}
             />
             </div>
             <Button type='submit'>Register</Button>

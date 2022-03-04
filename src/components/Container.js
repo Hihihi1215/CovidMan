@@ -5,16 +5,15 @@ import OrganisationCard from '../components/OrganisationCard'
 
 export class Container extends Component{
     state = { isShown: false };
+
     showModal = () => {
       this.setState({ isShown: true }, () => {
         this.closeButton.focus();
-        this.render()
       });
       this.toggleScrollLock();
     };
     closeModal = () => {
         this.setState({ isShown: false });
-        this.TriggerButton.focus();
         this.toggleScrollLock();
     };
     onKeyDown = (event) => {
@@ -30,27 +29,34 @@ export class Container extends Component{
     toggleScrollLock = () => {
         document.querySelector('html').classList.toggle('scroll-lock');
     };
+
+    isRegOrgRep = () =>{
+        return this.props.eventType == 'register-organizationRep'
+    }
+
     render() {
         return (
             <React.Fragment>
-                {this.props.eventType == 'register-organizationRep'?
+                {this.isRegOrgRep()?
                     (
-                        <OrganisationCard
+                        <div className={this.props.className}>
+                            <OrganisationCard
                             onClick={this.showModal}
                             orgID={this.props.org.orgID}
                             orgName={this.props.org.orgName}
                             orgAddress={this.props.org.orgAddress}/>
+                        </div>
                     )
                      : 
                     (
                         <Button
-                        buttonRef={(n) => (this.Button = n)}
-                        onClick={this.showModal}
+                            buttonRef={(n) => (this.Button = n)}
+                            onClick={this.showModal}
                         >
                         {this.props.buttonText}
                         </Button>
                     )
-                };
+                }
                 
                 {this.state.isShown ? (
                     <Modal
@@ -60,7 +66,7 @@ export class Container extends Component{
                         closeModal={this.closeModal}
                         onKeyDown={this.onKeyDown}
                         onClickOutside={this.onClickOutside}
-                        organizationName={this.props.org.orgName}
+                        organization={this.isRegOrgRep() ? this.props.org : null}
                     />
                 ): null}
             </React.Fragment>

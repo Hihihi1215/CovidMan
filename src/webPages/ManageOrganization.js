@@ -2,14 +2,10 @@ import React, {useEffect, useState} from "react";
 import '../css/ManageOrganization.css'
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
-import { Link } from 'react-router-dom';
-import OrganisationCard from '../components/OrganisationCard'
 import Container from "../components/Container";
 
 function ManageOrganization(){
-
     const [ organisations, setOrganisations ] = useState([]);
-
     useEffect(() => {
         const getOrganisations = async() => {
             const querySnapshot = await getDocs(collection(db, "organisations"));
@@ -37,7 +33,9 @@ function ManageOrganization(){
                 {
                     organisations.map((organisation) => {
                         return (
-                            <Container eventType='register-organizationRep'
+                            <Container
+                                className="links" 
+                                eventType='register-organizationRep'
                                 org={organisation}/>
                         )  
                     })
