@@ -22,14 +22,14 @@ function RegisterAppForm(props) {
 
     const idRegex = /\d{6}-\d{2}-\d{4}/;
     const emailRegex = /\w+@\w+.com/;
-    const numRegex = /^[1-9]{1,3}$/;
+    const numRegex = /^[0-9]{1,3}$/;
     const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;    
 
 
     const testIncome = (theIncome) => {
         if(numRegex.test(theIncome)){
             let x = parseInt(theIncome);
-            return (x >= 0.001 && x <= 0.009);
+            return (x < 0 || x > 999);
         } else {
             return true;
         }
@@ -168,14 +168,14 @@ function RegisterAppForm(props) {
     }
 
   return (
-    <div className='register-appFormWrapper'>
+    <div className='register-appFormWrapper fade-in-sign-in'>
         <h4>{props.orgName} Organisation</h4>
         <h5>Register Aid Applicant</h5>
         <Form 
             noValidate
             onSubmit={handleSubmit}
             >
-            <div className='forms form1 fade-in'>
+            <div className='forms form1 fade-in-left'>
                 <FormControl
                     icon={faUser}
                     input='name'
@@ -226,7 +226,7 @@ function RegisterAppForm(props) {
                     duplicate = {duplicate}
                 />
             </div>
-            <div className='forms form2 fade-in'>
+            <div className='forms form2 fade-in-left'>
                 <h6>Upload Proof of Household Income</h6>
                 <Dropzone setFiles={setFiles} setInvalid={setInvalid} invalid={invalid}/>
             </div>

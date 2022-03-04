@@ -13,13 +13,13 @@ import { passwordGenerator } from "./PasswordGenerator";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCQY_1-Wb8Kl_i3MvjNEOQertpZ_bRt_B4",
-  authDomain: "covid-man-a9a98.firebaseapp.com",
-  projectId: "covid-man-a9a98",
-  storageBucket: "covid-man-a9a98.appspot.com",
-  messagingSenderId: "338516074338",
-  appId: "1:338516074338:web:49a4a3c6aa41364c99563b",
-  measurementId: "G-373LKM4X4W"
+  apiKey: "AIzaSyCwFXDoXV-9rGfnP0aGhZB0r-U2ecFAhaE",
+  authDomain: "covid-man-e9d5d.firebaseapp.com",
+  projectId: "covid-man-e9d5d",
+  storageBucket: "covid-man-e9d5d.appspot.com",
+  messagingSenderId: "99427361084",
+  appId: "1:99427361084:web:1e1fd66d7cdc1568dbfe39",
+  measurementId: "G-N4HFBY9HKX"
 };
 
 // Initialize Firebase
@@ -74,7 +74,7 @@ const addAidApplicant = async (name, id, income, email, mobileNo, address, passw
     password: password,
     residentialAddress: address,
     userType: "aidApplicant",
-    username: password,
+    username: email,
     orgDocID : orgDocID
   });
 }
