@@ -1,0 +1,13 @@
+.register-covidManAdmin{
+  width: 100%;
+  height: 100vh;
+  background-image: url("../img/admin.jpg");
+  background-size: cover;
+  background-position: left center;
+  display: flex;
+  align-items: center;
+}
+
+.register-covidManAdmin.blur {
+  filter: blur(20px);
+}

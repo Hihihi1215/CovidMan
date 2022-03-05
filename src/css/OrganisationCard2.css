@@ -1,0 +1,83 @@
+.org-anim {
+    animation: organisation-card-animate 0.5 linear;
+  }
+  
+  .org-anim-enter-done {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+  }
+  
+  @keyframes organisation-card-animate {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .organisation-card {
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+    position: relative;
+    height: 200px;
+    cursor: pointer;
+    width: 17rem;
+    transform: scale(0);
+    opacity: 0;
+    margin: 25px;
+  }
+  
+  .organisation-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    box-shadow: 0 0.5rem 1rem -0.25em rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+  }
+  
+  .organisation-card:hover {
+    transform: translateY(-0.35em) scale(1.02) !important;
+  }
+  
+  .organisation-card:hover::after {
+    opacity: 1;
+  }
+  
+  .card {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .card-title {
+    margin-bottom: 1rem;
+  }
+  
+  .card-img-top {
+    height: 40%;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .organisation-card {
+      margin: 25px 50px 25px 0;
+    }
+  }
+  
+  .organisation-card:hover .card-img-top{
+    height: 10px;
+  }
+  
+  .organization-address{
+    visibility: hidden;
+  }
+  
+  .organisation-card:hover .organization-address{
+    visibility: visible;
+  }
+  
