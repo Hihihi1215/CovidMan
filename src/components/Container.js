@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Button } from "react-bootstrap";
 import Modal from "./Modal";
-import OrganisationCard from '../components/OrganisationCard'
+import OrganisationCard from './OrganisationCard'
 
 export class Container extends Component{
     state = { isShown: false };

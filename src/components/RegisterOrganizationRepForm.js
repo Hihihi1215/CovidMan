@@ -4,8 +4,6 @@ import {faUser, faEnvelope, faMobileScreenButton,faIdCard, faIdCardClip} from '@
 import { Button, Form, Modal } from "react-bootstrap";
 import FormControl from "./FormControl";
 import { checkDuplicateOrgRep, createOrganizationRep } from "../firebase";
-import { confirmAlert } from "react-confirm-alert";
-import FocusTrap from "focus-trap-react";
 
 function RegisterOrganizationRep(props){
     const [username, setUsername ] = useState('')
@@ -112,7 +110,7 @@ function RegisterOrganizationRep(props){
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Register Organizaton Representative
+            Register Organization Representative
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

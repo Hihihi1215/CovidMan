@@ -5,8 +5,6 @@ import FormControl from './FormControl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faBuilding, faLocation} from '@fortawesome/free-solid-svg-icons';
 import { checkDuplicateOrganization, createNewOrganization } from "../firebase";
-import { confirmAlert } from "react-confirm-alert";
-import FocusTrap from "focus-trap-react";
 
 function AddOrganizationForm(props){
 

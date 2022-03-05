@@ -11,7 +11,7 @@ function RegisterAdminForm(props){
     const [ mobileNo, setMobileNo ] = useState('');
     const [ adminNo, setAdminNo ] = useState('');
     const [ duplicate, setDuplicate ] = useState('');
-    const emailRegex = /\w+@\w+.com/;
+    const emailRegex = /^\w+@\w+.com$/;
     const mobileNoRegex = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/;
 
     const inputBlank = (inputGroupName) => {

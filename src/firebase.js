@@ -13,13 +13,13 @@ import { passwordGenerator } from "./PasswordGenerator";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCwFXDoXV-9rGfnP0aGhZB0r-U2ecFAhaE",
-  authDomain: "covid-man-e9d5d.firebaseapp.com",
-  projectId: "covid-man-e9d5d",
-  storageBucket: "covid-man-e9d5d.appspot.com",
-  messagingSenderId: "99427361084",
-  appId: "1:99427361084:web:1e1fd66d7cdc1568dbfe39",
-  measurementId: "G-N4HFBY9HKX"
+  apiKey: "AIzaSyCQY_1-Wb8Kl_i3MvjNEOQertpZ_bRt_B4",
+  authDomain: "covid-man-a9a98.firebaseapp.com",
+  projectId: "covid-man-a9a98",
+  storageBucket: "covid-man-a9a98.appspot.com",
+  messagingSenderId: "338516074338",
+  appId: "1:338516074338:web:49a4a3c6aa41364c99563b",
+  measurementId: "G-373LKM4X4W"
 };
 
 // Initialize Firebase
@@ -124,7 +124,9 @@ const addNewOrganization = async (orgID, orgName, orgAddress) =>{
   await addDoc(orgRef, {
     orgID: orgID,
     orgName: orgName,
-    orgAddress: orgAddress
+    orgAddress: orgAddress,
+    aidApplicants: [],
+    orgRep : null
   });
 }
 
@@ -189,19 +191,15 @@ export const getOrgByDocID = async (orgDocID) => {
 }
 
 const addAidApplicantToOrg = async (orgDocID, uid) => {
-
   const orgRef = doc(db, "organisations", orgDocID)
   await updateDoc(orgRef, {
     aidApplicants : arrayUnion(uid)
   });
 }
 
-// Jen Password Generator
-// var jen = new Jen(true, true);
 
 // Registering an Aid Applicant
 export const createAidApplicant = (name, id, income, email, mobileNo, address, files, orgDocID) => {
-  // const password = jen.password(30);
   const password = passwordGenerator();
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -245,12 +243,22 @@ export const createNewOrganization = (name, address) => {
   getOrganizationCount()
 }
 
+const addOrganisationRepToOrganisation = async (orgDocID, uid) => {
+  const orgRef = doc(db, "organisations", orgDocID);
+  await updateDoc(orgRef, {
+    orgRep: uid
+  });
+}
+
 export const createOrganizationRep = (username, name, email, mobileNo, jobtitle, orgID, orgDocID) => {
   const password = passwordGenerator();
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const uid = userCredential.user.uid;
       addOrganizationRep(username, name, email, mobileNo, jobtitle, password, orgID, orgDocID, uid)
+        .then((res) => {
+          addOrganisationRepToOrganisation(orgDocID, uid);
+        })
       sendEmail(name, username, password, email)
         .then((res) => {
           console.log('Please check your mail box for your username and password');
@@ -269,7 +277,7 @@ export const createCovidManAdmin = (adminNo, name, email, mobileNo) =>{
     .then((userCredential) => {
       const uid = userCredential.user.uid;
       console.log('add admin');
-      addCovidManAdmin(adminNo, password, name, email, mobileNo, password, uid)
+      addCovidManAdmin(adminNo, email, name, email, mobileNo, password, uid)
       sendEmail(name, email, password, email)
         .then((res) => {
           console.log('Please check your mail box for your username and password');

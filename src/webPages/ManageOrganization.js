@@ -56,8 +56,8 @@ function ManageOrganization(){
 
     const registerOrgRepConfirm = () => {
         setConfimationModalShow(true)
-        setTitle('Organizaion Represantative Register Successfully!')
-        setBody('An email has been sent with the password')
+        setTitle('Organization Representative Registered Successfully!')
+        setBody('An email has been sent with the username and password')
     }
     
 

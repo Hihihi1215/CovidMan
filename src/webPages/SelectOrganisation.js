@@ -28,6 +28,7 @@ function SelectOrganisation() {
                         classNames="org-anim"
                         timeout={500}>
                         <OrganisationCard
+                            orgID = {organisation.orgID}
                             orgDocID = {organisation.id}
                             orgName={organisation.orgName}
                             orgAddress={organisation.orgAddress}/>
