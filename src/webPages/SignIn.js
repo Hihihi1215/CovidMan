@@ -45,7 +45,8 @@ function SignIn() {
               const org = getOrgByDocID(orgDocID);
               org.then((res) => {
                 navigate('/RegisterApp', {
-                  state : { orgName : res.orgName, orgDocID : orgDocID }
+                  state : { orgName : res.orgName, orgDocID : orgDocID },
+                  replace : true
                 });
               })
             } else if(res.userType === 'covidManAdmin') {
