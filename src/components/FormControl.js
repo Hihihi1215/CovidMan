@@ -11,9 +11,9 @@ function FormControl(props) {
         } else if(props.input === 'email'){
             return ' in the format of xxx@xxx.com';
         } else if(props.input === 'income'){
-            return ' that is in the range of 0 - 4000'
+            return ' that is in the range of 0 - 999'
         } else if(props.input === 'mobileNo'){
-            return ' in the format of (+60)XXXXXXXXX'
+            return ' in the format of (60)XXXXXXXXX'
         }
     }
 

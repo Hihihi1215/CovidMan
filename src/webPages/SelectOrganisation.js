@@ -12,8 +12,6 @@ function SelectOrganisation() {
     const [ organisationComponents, setOrganisationComponents ] = useState([]);
     const [ organisations, setOrganisations ] = useState([]);
 
-    // console.log(organisationComponents);
-
     useEffect(() => {
         const getOrganisations = async() => {
             const querySnapshot = await getDocs(collection(db, "organisations"));
@@ -40,8 +38,6 @@ function SelectOrganisation() {
 
         getOrganisations();
     }, [organisations]);
-
-    // console.log(organisationComponents);
 
   return (
     <div className='select-organisation'>

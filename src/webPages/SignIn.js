@@ -18,31 +18,19 @@ function SignIn() {
   const handleChange = e => {
     if(e.target.id === 'username-input'){
       setUsername(e.target.value);
+      signInInputFilled('username');
     } else if(e.target.id === 'password-input') {
       setPassword(e.target.value);
-    }
-    if(username) {
-      usernameFilled();
-    }
-    if(password) {
-      passwordFilled();
+      signInInputFilled('password');
     }
   }
 
   const handleSubmit = e => {
-    if(!username && !password) {
-      e.preventDefault();
-      const usernameInput = usernameBlank();
-      passwordBlank();
-      usernameInput.focus();
-    } else if(!username){
-      e.preventDefault();
-      const usernameInput = usernameBlank();
-      usernameInput.focus();
+    e.preventDefault();
+    if(!username){
+      signInInputBlank('username');
     } else if(!password) {
-      e.preventDefault();
-      const passwordInput = passwordBlank();
-      passwordInput.focus();
+      signInInputBlank('password');
     } else {
       e.preventDefault();
       getUserByUsername(username).then((user) => {
@@ -62,115 +50,89 @@ function SignIn() {
               })
             } else if(res.userType === 'covidManAdmin') {
               navigate(`/ManageOrg`)
-            }else{
-              invalidUsername();
+            } else {
+              invalidSignIn('username');
             }
           })
         })
         .catch((error) => {
           const code = error.code;
-          if(code.indexOf('email') != -1){
-            invalidUsername();
+          if(code.indexOf('password') != -1){
+            invalidSignIn('password');
           } else {
-            invalidPassword();
+            invalidSignIn('username')
           }
         })
       })
     }
   }
 
-  const invalidPassword = () => {
-    const passwordTooltip2 = document.querySelector('#password-tooltip2');
-    const passwordInput = document.querySelector('#password-input');
-    passwordInput.value = '';
-    passwordInput.focus();
-    passwordTooltip2.style.display = 'block';
-    passwordTooltip2.style.animation = 'fadeOut 0.4s 3.65s ease-out';
-    setTimeout(() => {
-      passwordTooltip2.style.display = 'none';
-    }, 4000);
-  }
-
-  const invalidUsername = () => {
-    const usernameTooltip2 = document.querySelector('#username-tooltip2');
-    const usernameInput = document.querySelector('#username-input');
-    usernameInput.style = `
+  const invalidSignIn = (input) => {
+    const tooltip = document.querySelector(`#${input}-tooltip2`);
+    const formControl = document.querySelector(`#${input}-input`);
+    formControl.style = `
       box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
       border: 1px solid #E66D7A;
     `;
-    usernameInput.value = '';
-    usernameInput.focus();
-    usernameTooltip2.style.display = 'block';
-    usernameTooltip2.style.animation = 'fadeOut 0.4s 3.65s ease-out';
+    formControl.value = '';
+    formControl.focus();
+    tooltip.style.display = 'block';
+    tooltip.style.animation = 'fadeOut 0.4s 3.65s ease-out';
     setTimeout(() => {
-      usernameTooltip2.style.display = 'none';
+      tooltip.style.display = 'none';
     }, 4000);
+    if(input === 'username') {
+      const tooltip = document.querySelector(`#password-tooltip2`);
+      const formControl = document.querySelector(`#password-input`);
+      formControl.style = `
+        box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
+        border: 1px solid #E66D7A;
+      `;
+      formControl.value = '';
+      tooltip.style.display = 'block';
+      tooltip.style.animation = 'fadeOut 0.4s 3.65s ease-out';
+      setTimeout(() => {
+        tooltip.style.display = 'none';
+      }, 4000);
+    }
   }
 
-  const passwordFilled = () => {
-    const passwordTooltip = document.querySelector('#password-tooltip');
-    const passwordInput = document.querySelector('#password-input');
-    passwordInput.style = `
+  const signInInputFilled = (input) => {
+    const tooltip = document.querySelector(`#${input}-tooltip`);
+    const formControl = document.querySelector(`#${input}-input`);
+    formControl.style = `
       box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
       border: 1px solid #85BFA4;
       animation : inputBoxGreenFadeout 0.4s 3.65s ease-out;
     `;
     setTimeout(() => {
-      passwordInput.style = `
+      formControl.style = `
         box-shadow: none;
         border: 1px solid #ced4da;
       `;
     }, 4000);
-    passwordTooltip.style.display = 'none';
+    tooltip.style.display = 'none';
   }
 
-  const usernameFilled = () => {
-    const usernameTooltip = document.querySelector('#username-tooltip');
-    const usernameInput = document.querySelector('#username-input');
-    usernameInput.style = `
-      box-shadow: 0.5px 0.5px 0.5px 4px #C5E1D4;
-      border: 1px solid #85BFA4;
-      animation : inputBoxGreenFadeout 0.4s 3.65s ease-out;
-    `;
-    setTimeout(() => {
-      usernameInput.style = `
-        box-shadow: none;
-        border: 1px solid #ced4da;
-      `;
-    }, 4000);
-    usernameTooltip.style.display = 'none';
-  }
-
-  const passwordBlank = () => {
-    const passwordTooltip = document.querySelector('#password-tooltip');
-    const passwordInput = document.querySelector('#password-input');
-    passwordInput.style = `
+  const signInInputBlank = (input) => {
+    const tooltip = document.querySelector(`#${input}-tooltip`);
+    const formControl = document.querySelector(`#${input}-input`);
+    formControl.style = `
       box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
       border: 1px solid #E66D7A;
     `;
-    passwordTooltip.style.display = 'block';
-    return passwordInput;
-  }
-
-  const usernameBlank = () =>{
-    const usernameTooltip = document.querySelector('#username-tooltip');
-    const usernameInput = document.querySelector('#username-input');
-    usernameInput.style = `
-      box-shadow: 0.5px 0.5px 0.5px 4px #F6CCD0;
-      border: 1px solid #E66D7A;
-    `;
-    usernameTooltip.style.display = 'block';
-    return usernameInput;
+    tooltip.style.display = 'block';
+    formControl.focus();
   }
 
   return (
     <div className='sign-in'>
-      <div className='sign-inWrapper'>
+      <div className='sign-inWrapper fade-in-sign-in'>
         <h2 className='title'>Sign In</h2>
         <Form 
           noValidate 
           onSubmit={handleSubmit}>
-          <div className='fade-in sign-inFormInputs'>
+          <div className='fade-in-left sign-inFormInputs'>
             <InputGroup hasValidation>
               <InputGroup.Text>
                 <FontAwesomeIcon icon={faUser}/>
