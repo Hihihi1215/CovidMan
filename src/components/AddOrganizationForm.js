@@ -164,8 +164,8 @@ function AddOrganizationForm(props){
             </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={props.onHide} variant="secondary" className="btn">Close</Button>
-            <Button onClick={handleSubmit} variant="primary">Add</Button>
+            <Button onClick={props.onHide} variant="secondary" className="new-orgBtn">Close</Button>
+            <Button onClick={handleSubmit} variant="primary" className="new-orgBtn">Add</Button>
         </Modal.Footer>
       </Modal>
     );

@@ -194,6 +194,7 @@ function SignIn() {
           </div>
           <Button 
             type='submit'
+            className='sign-inSubmitBtn'
             variant='primary'>
               Submit
           </Button>
