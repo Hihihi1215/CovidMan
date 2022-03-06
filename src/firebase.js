@@ -126,7 +126,7 @@ const addNewOrganization = async (orgID, orgName, orgAddress) =>{
     orgName: orgName,
     orgAddress: orgAddress,
     aidApplicants: [],
-    orgRep : null
+    orgRep : []
   });
 }
 
@@ -163,6 +163,7 @@ export const getUserByUsername = async (username) => {
     return querySnapshot1.docs[0].data()
   }else{
     console.log("No such document!");
+    return 'no such user'
   }
 }
 
@@ -246,7 +247,7 @@ export const createNewOrganization = (name, address) => {
 const addOrganisationRepToOrganisation = async (orgDocID, uid) => {
   const orgRef = doc(db, "organisations", orgDocID);
   await updateDoc(orgRef, {
-    orgRep: uid
+    orgRep: arrayUnion(uid)
   });
 }
 
