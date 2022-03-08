@@ -18,6 +18,9 @@ function Home() {
         <Link to="/ManageOrg">
           <Button variant="outline-primary">To Manage Org</Button>
         </Link>
+        <Link to="/ViewAppeals">
+          <Button variant="outline-primary">To View Appeals</Button>
+        </Link>
     </div>
   )
 }
