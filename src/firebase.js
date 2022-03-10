@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { addDoc, arrayUnion, doc, getDoc, getFirestore, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
@@ -28,7 +28,16 @@ export const analytics = getAnalytics(app);
 
 // Authentication
 const auth = getAuth();
-export { auth, signInWithEmailAndPassword };
+export { auth, signInWithEmailAndPassword, onAuthStateChanged as authStateChanged };
+
+// Sign Out
+export const firebaseSignOut = () => {
+  signOut(auth).then(() => {
+    console.log('Sign-out successful.')
+  }).catch((error) => {
+    console.log('An error happened. ' + error.message)
+  });
+}
 
 // Firestore
 export const db = getFirestore();

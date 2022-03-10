@@ -4,12 +4,15 @@ import './css/index.css';
 import App from './webPages/App';
 import reportWebVitals from './reportWebVitals';
 import OrganisationProvider from './OrganisationContext';
+import UserAuthProvider from './UserAuthContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <OrganisationProvider>
-      <App />
-    </OrganisationProvider>
+    <UserAuthProvider>
+      <OrganisationProvider>
+        <App />
+      </OrganisationProvider>
+    </UserAuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

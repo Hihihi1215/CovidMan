@@ -12,6 +12,7 @@ import ManageOrganization from './ManageOrganization';
 import AdminConfirmationModal from '../components/AdminConfirmationModal';
 import ViewAppeals from './ViewAppeals';
 import OrgRepHome from './OrgRepHome';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
@@ -46,8 +47,10 @@ function App() {
           }/>
           <Route path='OrgRepHome/RegisterApp' element={
               <>
-                <RegisterAidApplicant showModal={showModal}/>
-                <AidAppConfirmationModal/>
+                <ProtectedRoute>
+                  <RegisterAidApplicant showModal={showModal}/>
+                  <AidAppConfirmationModal/>
+                </ProtectedRoute>
               </>
           }/>
           <Route path='/RegisterAdmin' element={
