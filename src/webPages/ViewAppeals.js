@@ -16,35 +16,23 @@ function ViewAppeals() {
     const getAppeals = async (logicalOp) => {
         const q = query(appealsRef, where("toDate", logicalOp, convertDateToTimestamp(today)))
         const querySnapshot = await getDocs(q);
-        let dummyAppeals = []; 
-        querySnapshot.docs.map((doc) => {
+        return Promise.all(querySnapshot.docs.map((doc) => {
             const docData = { ...doc.data() };
-            getOrgByDocID(docData.orgDocID)
-                .then((res) => {
-                    const appealData = {
-                        ...docData,
-                        orgName : res.orgName, 
-                        orgAddress : res.orgAddress
-                    }
-                    dummyAppeals.push(appealData)
-                    setCurrentAppeals(dummyAppeals);
-                })
-        })
+            return getOrgByDocID(docData.orgDocID)
+              .then((res) => ({
+                ...docData,
+                orgName : res.orgName, 
+                orgAddress : res.orgAddress
+              }))
+            })
+          );
     }
 
     useEffect(() => {
         getAppeals(">=")
-            .then((res) => setAppeals(currentAppeals.map((appeal, i) => {
-                return (
-                    <AppealCard
-                        appealID={appeal.appealID}
-                        from={appeal.fromDate}
-                        to={appeal.toDate}
-                        orgName={appeal.orgName}
-                        orgAddress={appeal.orgAddress}
-                        outcome={appeal.outcome}/>
-                )
-            })));
+            .then((res) => {
+                setAppeals(res);
+            });
     }, []);
 
     const pastPresentOnClick = e => {
@@ -53,9 +41,17 @@ function ViewAppeals() {
         if(e.target.id === 'past'){
             past.classList.add('past-presentActive');
             present.classList.remove('past-presentActive');
+            getAppeals("<")
+                .then((res) => {
+                    setAppeals(res);
+                });
         } else if(e.target.id === 'present'){
             present.classList.add('past-presentActive');
             past.classList.remove('past-presentActive');
+            getAppeals(">=")
+                .then((res) => {
+                    setAppeals(res);
+                });
         }
     }
 
@@ -71,7 +67,16 @@ function ViewAppeals() {
         </div>
         <div className='view-appealsBody'>
             {
-                appeals
+                appeals.map((appeal, i) => (
+                    <AppealCard
+                      key={appeal.appealID}
+                      appealID={appeal.appealID}
+                      from={appeal.fromDate}
+                      to={appeal.toDate}
+                      orgName={appeal.orgName}
+                      orgAddress={appeal.orgAddress}
+                      outcome={appeal.outcome}/>
+                ))
             }
         </div>
     </div>
