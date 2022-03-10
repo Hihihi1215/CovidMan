@@ -7,10 +7,12 @@ import { useNavigate } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import '../css/SignIn.css'
 import { auth, getOrgByDocID, getUserByUID, getUserByUsername} from '../firebase'
+import { useOrganisationUpdate } from '../OrganisationContext'
 
 
 function SignIn() {
 
+  const setOrganisation = useOrganisationUpdate();
   const navigate = useNavigate();
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -44,8 +46,11 @@ function SignIn() {
               const orgDocID = res.orgDocID;
               const org = getOrgByDocID(orgDocID);
               org.then((res) => {
-                navigate('/RegisterApp', {
-                  state : { orgName : res.orgName, orgDocID : orgDocID },
+                setOrganisation({
+                  orgName : res.orgName,
+                  orgDocID : orgDocID
+                })
+                navigate('/OrgRepHome', {
                   replace : true
                 });
               })
@@ -61,6 +66,7 @@ function SignIn() {
           if(code.indexOf('password') != -1){
             invalidSignIn('password');
           } else {
+            console.log(code)
             invalidSignIn('username')
           }
         })

@@ -11,6 +11,7 @@ import RegisterCovidManAdmin from './RegisterCovidManAdmin';
 import ManageOrganization from './ManageOrganization';
 import AdminConfirmationModal from '../components/AdminConfirmationModal';
 import ViewAppeals from './ViewAppeals';
+import OrgRepHome from './OrgRepHome';
 
 function App() {
 
@@ -40,11 +41,14 @@ function App() {
               <SelectOrganisation/>
             </>
           }/>
-          <Route path='/RegisterApp' element={
-            <>
-              <RegisterAidApplicant showModal={showModal}/>
-              <AidAppConfirmationModal/>
-            </>
+          <Route path='OrgRepHome' element={
+            <OrgRepHome/>
+          }/>
+          <Route path='OrgRepHome/RegisterApp' element={
+              <>
+                <RegisterAidApplicant showModal={showModal}/>
+                <AidAppConfirmationModal/>
+              </>
           }/>
           <Route path='/RegisterAdmin' element={
             <>

@@ -2,12 +2,11 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import RegisterAppForm from '../components/RegisterAppForm'
 import '../css/RegisterAidApplicant.css'
+import { useOrganisation } from '../OrganisationContext';
 
 function RegisterAidApplicant(props) {
 
-  const location = useLocation();
-  const locationState = location.state;
-  const { orgName, orgDocID } = locationState;
+  const { orgName, orgDocID } = useOrganisation();
 
   const blurThePage = () => {
     const registerAidApplicant = document.querySelector('.register-aidApplicant');
