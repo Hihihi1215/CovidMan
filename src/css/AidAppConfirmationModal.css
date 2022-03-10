@@ -91,6 +91,10 @@
 .app-confirmationOkBtn {
   background-color: #43c9ff;
   border: #43c9ff;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 50px;
+  font-weight: bold;
 }
 
 @media screen and (min-width: 576px) {

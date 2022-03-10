@@ -10,6 +10,7 @@ import AidAppConfirmationModal from '../components/AidAppConfirmationModal';
 import RegisterCovidManAdmin from './RegisterCovidManAdmin';
 import ManageOrganization from './ManageOrganization';
 import AdminConfirmationModal from '../components/AdminConfirmationModal';
+import ViewAppeals from './ViewAppeals';
 
 function App() {
 
@@ -54,6 +55,11 @@ function App() {
           <Route path='/ManageOrg' element={
             <>
               <ManageOrganization/>
+            </>
+          }/>
+          <Route path='/ViewAppeals' element={
+            <>
+              <ViewAppeals/>
             </>
           }/>
         </Routes>

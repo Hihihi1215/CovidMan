@@ -4,7 +4,6 @@ import '../css/SelectOrganisation.css';
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Link } from 'react-router-dom';
 
 
 function SelectOrganisation() {

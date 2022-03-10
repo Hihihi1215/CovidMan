@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { addDoc, arrayUnion, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, doc, getDoc, getFirestore, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
@@ -290,3 +290,9 @@ export const createCovidManAdmin = (adminNo, name, email, mobileNo) =>{
       console.log(error.code + " " + errorMessage);
     });
 }
+
+export const convertDateToTimestamp = (today) => {
+  return Timestamp.fromDate(today);
+}
+
+export {Timestamp}
