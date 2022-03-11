@@ -24,6 +24,13 @@
   padding: 10px;
 }
 
+.record-aidDisbursementBody {
+  display: flex;
+  height: 370px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
 @media screen and (min-width: 768px) {
   .record-aidDisbursementGrid {
     padding: 0;

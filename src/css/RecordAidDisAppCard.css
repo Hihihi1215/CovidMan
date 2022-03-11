@@ -1,0 +1,46 @@
+.record-aidDisAppCardWrapper {
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease;
+  position: relative;
+  cursor: pointer;
+  min-width: 20rem;
+  width: 20rem;
+  margin: 25px;
+  height: 320px;
+  animation: record-aid-app-card-animate 0.3s linear;
+}
+
+@keyframes record-aid-app-card-animate {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.record-aidDisAppCardWrapper::after {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  opacity: 0;
+  box-shadow: 0 0.5rem 1rem -0.25em rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+.record-aidDisAppCardWrapper:hover {
+  transform: translateY(-0.35em) scale(1.02) !important;
+}
+
+.record-aidDisAppCardWrapper:hover::after {
+  opacity: 1;
+}
+
+.record-aidDisAppCardImg {
+  height: 100px;
+}
