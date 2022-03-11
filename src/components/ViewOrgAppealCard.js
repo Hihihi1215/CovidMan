@@ -10,7 +10,7 @@ function ViewOrgAppealCard(props) {
 
     const handleViewOrgAppCardClick = async () => {
         const q = query(contributionsRef, where("appealDocID", "==", props.appealDocID));
-        props.setAppealDocID(props.appealID);
+        props.setAppealDocID(props.appealDocID);
         const querySnapshot = await getDocs(q);
         props.setContributions(querySnapshot.docs.map((doc) => ({
             ...doc.data()

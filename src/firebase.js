@@ -177,6 +177,18 @@ export const getUserByUsername = async (username) => {
   }
 }
 
+export const getOrgAppealByDocID = async (appealDocID) => {
+  const docRef = doc(db, "appeals", appealDocID)
+  const docSnap = await getDoc(docRef);
+
+  if(docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
 export const getUserByUID = async (uid) => {
   const docRef = doc(db, "users", uid)
   const docSnap = await getDoc(docRef);
