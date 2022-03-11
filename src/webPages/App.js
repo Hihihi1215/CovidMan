@@ -13,6 +13,8 @@ import AdminConfirmationModal from '../components/AdminConfirmationModal';
 import ViewAppeals from './ViewAppeals';
 import OrgRepHome from './OrgRepHome';
 import ProtectedRoute from './ProtectedRoute';
+import ViewOrgAppeals from './ViewOrgAppeals';
+import RecordAidDisbursement from './RecordAidDisbursement';
 
 function App() {
 
@@ -50,6 +52,20 @@ function App() {
                 <ProtectedRoute>
                   <RegisterAidApplicant showModal={showModal}/>
                   <AidAppConfirmationModal/>
+                </ProtectedRoute>
+              </>
+          }/>
+          <Route path='OrgRepHome/ViewOrgAppeals' element={
+              <>
+                <ProtectedRoute>
+                  <ViewOrgAppeals/>
+                </ProtectedRoute>
+              </>
+          }/>
+          <Route path='OrgRepHome/RecordAidDisbursement' element={
+              <>
+                <ProtectedRoute>
+                  <RecordAidDisbursement/>
                 </ProtectedRoute>
               </>
           }/>

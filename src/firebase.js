@@ -7,6 +7,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { passwordGenerator } from "./PasswordGenerator";
+import { useNavigate } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

@@ -17,9 +17,10 @@ function AppealCard(props) {
                 <Card.Title>ID : {props.appealID}</Card.Title>
                 <Card.Text>From : {fromDate}</Card.Text>
                 <Card.Text>To : {toDate}</Card.Text>
-                <Card.Text className='appeal-cardOnHover'>{props.orgName} Organisation</Card.Text>
+                <Card.Text>{props.description}</Card.Text>
+                <Card.Text className='appeal-cardOnHover'>{props.orgName && `${props.orgName} Organisation`}</Card.Text>
                 <Card.Text className='appeal-cardOnHover'>{props.orgAddress}</Card.Text>
-                <Card.Text className='appeal-cardOnHover'>Outcome : {props.outcome}</Card.Text>
+                <Card.Text className='appeal-cardOnHover'>{props.outcome && `Outcome : ${props.outcome}`}</Card.Text>
             </Card.Body>
         </Card>
     </div>

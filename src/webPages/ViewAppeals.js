@@ -7,8 +7,6 @@ import { convertDateToTimestamp, db, getOrgByDocID } from '../firebase';
 
 function ViewAppeals() {
 
-    const [ currentAppeals, setCurrentAppeals ] = useState([]);
-    const [ pastAppeals, setPastAppeals ] = useState([]);
     const [ appeals, setAppeals ] = useState([]);
     const today = new Date();
     const appealsRef = collection(db, "appeals");
@@ -75,7 +73,8 @@ function ViewAppeals() {
                       to={appeal.toDate}
                       orgName={appeal.orgName}
                       orgAddress={appeal.orgAddress}
-                      outcome={appeal.outcome}/>
+                      outcome={appeal.outcome}
+                      description={appeal.description}/>
                 ))
             }
         </div>

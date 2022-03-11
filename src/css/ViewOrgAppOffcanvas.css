@@ -1,0 +1,55 @@
+.view-orgAppealsOffcanvas {
+  height: fit-content;
+  padding-left: 30px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.view-orgAppOffTitle {
+  position: relative;
+  margin: 0 auto;
+  left: 3%;
+}
+
+.view-orgAppOffBody {
+  padding-top: 0;
+}
+
+.view-orgAppOffBodyConWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.view-orgAppViewApplicantsBtn {
+  width: 150px;
+  border-radius: 50px;
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.view-orgAppOffContriWrapper {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+@media screen and (min-width: 576px) {
+  .view-orgAppOffContriWrapper {
+    display: flex;
+    height: 400px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  .view-orgAppOffTitle {
+    margin: unset;
+    left: unset;
+    position: unset;
+  }
+
+  .view-orgAppViewApplicantsBtn {
+    margin-left: unset;
+    margin-right: unset;
+  }
+}
