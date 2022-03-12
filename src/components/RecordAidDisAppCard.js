@@ -1,9 +1,15 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import lightblue from '../img/lightBlue.jpg'
 import '../css/RecordAidDisAppCard.css'
+import { viewFiles } from '../firebase'
 
 function RecordAidDisAppCard(props) {
+
+  const viewIncomeClick = () => {
+    viewFiles(props.uid);
+  }
+
   return (
     <div className='record-aidDisAppCardWrapper'>
         <Card className='record-aidDisAppCard'>
@@ -13,6 +19,14 @@ function RecordAidDisAppCard(props) {
                 <Card.Text>Name : {props.name}</Card.Text>
                 <Card.Text>Household Income : ${props.income}</Card.Text>
                 <Card.Text>{props.address}</Card.Text>
+                <div className='download-IncomeFileBtnWrapper'>
+                  <Button 
+                    className='download-IncomeFileBtn' 
+                    variant='primary'
+                    onClick={viewIncomeClick}>
+                      View Income File
+                  </Button>
+                </div>
             </Card.Body>
         </Card>
     </div>

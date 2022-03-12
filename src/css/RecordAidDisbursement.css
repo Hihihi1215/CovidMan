@@ -1,5 +1,6 @@
 .record-aidDisHeadBodyWrapper {
   padding-top: 30px;
+  font-size: smaller;
 }
 
 .record-aidDisbursementHeader {
@@ -10,23 +11,25 @@
 
 .record-aidDisbursementDateWrapper {
   flex-direction: column;
+  margin-left: 0;
 }
 
 .record-aidDisbursementValueWrapper {
   flex-direction: column;
+  margin-left: 0;
 }
 
 .record-aidDisbursementDate {
-  padding: 10px;
+  padding: 7px 0;
 }
 
 .record-aidDisbursementValue {
-  padding: 10px;
+  padding: 7px 0;
 }
 
 .record-aidDisbursementBody {
   display: flex;
-  height: 370px;
+  height: 385px;
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -39,10 +42,14 @@
 
   .record-aidDisHeadBodyWrapper {
     padding-left: 45px;
+    padding-right: 45px;
   }
 
   .record-aidDisbursementHeader {
     text-align: unset;
+  }
+
+  .record-aidDisbursementBody {
   }
 
   .record-aidDisbursementDateWrapper {

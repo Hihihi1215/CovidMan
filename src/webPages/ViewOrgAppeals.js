@@ -38,7 +38,6 @@ function ViewOrgAppeals() {
 
   return (
     <div className='view-orgAppeals'>
-        <Navbar/>
         <div className='view-orgAppealsHeader'>
             <h3 className='view-orgAppealsHeaderContent'>{orgName} Organisation</h3>
             <h4 className='view-orgAppealsHeaderContent'>Appeals</h4>
@@ -46,7 +45,6 @@ function ViewOrgAppeals() {
         <div className='view-orgAppealsBody'>
             {
                 orgAppeals.map((orgAppeal, i) => {
-                    console.log(orgAppeal.appealID)
                     if(!orgAppeal.appealID)
                         return null
                     else

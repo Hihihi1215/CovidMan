@@ -6,7 +6,7 @@
   min-width: 20rem;
   width: 20rem;
   margin: 25px;
-  height: 320px;
+  height: 335px;
   animation: record-aid-app-card-animate 0.3s linear;
 }
 
@@ -43,4 +43,20 @@
 
 .record-aidDisAppCardImg {
   height: 100px;
+}
+
+.download-IncomeFileBtnWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.download-IncomeFileBtn {
+  z-index: 2;
+}
+
+.download-IncomeFileBtn:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  box-shadow: 0 0 0 0.25rem rgb(49 132 253 / 50%);
 }

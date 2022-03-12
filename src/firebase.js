@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, on
 import { addDoc, arrayUnion, doc, getDoc, getFirestore, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 import { passwordGenerator } from "./PasswordGenerator";
 import { useNavigate } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -59,6 +59,32 @@ const uploadFiles = (id, files) => {
       console.log('Uploaded a blob or file!');
     });
   })
+}
+
+// Download income files
+
+export const viewFiles = (uid) => {
+
+  const pathReference = ref(storage, uid);
+
+  // Find all the prefixes and items.
+
+  listAll(pathReference)
+    .then((res) => {
+      res.items.forEach((itemRef) => {
+        // All the items under listRef.
+        let itemPath = itemRef._location.path_;
+        getDownloadURL(ref(storage, itemPath))
+          .then((url) => {
+            window.open(url, "_blank");
+          })
+          .catch((error) => {
+            console.log(error.message)
+          });
+      });
+    }).catch((error) => {
+      console.log(error.message)
+    });
 }
 
 

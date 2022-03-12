@@ -22,7 +22,8 @@ function RecordAidDisbursement() {
     const getOrgAidAppsByDocID = async () => {
         const querySnapshot = await getDocs(orgAidAppsQ);
         setOrgAidApplicants(querySnapshot.docs.map((doc) => ({
-            ...doc.data()
+            ...doc.data(),
+            uid : doc.id
         })))
     }
 
@@ -38,11 +39,10 @@ function RecordAidDisbursement() {
 
   return (
     <div className='record-aidDisbursementWrapper'>
-        <Navbar/>
         <div className='record-aidDisHeadBodyWrapper'>
             <div className='record-aidDisbursementHeader'>
-                <h5>Record Aid Disbursement</h5>
-                <h5>{orgAppeal.appealID}</h5>
+                <h4>Record Aid Disbursement</h4>
+                <h5>Appeal ID : {orgAppeal.appealID}</h5>
                 <Container className='record-aidDisbursementGrid'>
                     <Row className='record-aidDisbursementDateWrapper'>
                         <Col className='record-aidDisbursementDate'>From Date : {orgAppeal.fromDate && convertTimestampToDateString(orgAppeal.fromDate)}</Col>
@@ -61,7 +61,8 @@ function RecordAidDisbursement() {
                             idno={orgAidApp.IDno}
                             name={orgAidApp.fullname}
                             income={orgAidApp.householdIncome}
-                            address={orgAidApp.residentialAddress}/>
+                            address={orgAidApp.residentialAddress}
+                            uid={orgAidApp.uid}/>
                     ))
                 }
             </div>
