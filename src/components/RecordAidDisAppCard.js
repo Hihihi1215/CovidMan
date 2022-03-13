@@ -6,12 +6,17 @@ import { viewFiles } from '../firebase'
 
 function RecordAidDisAppCard(props) {
 
+  const recAidDisAppCardClick = () => {
+    props.handleRecAidDisModalShow();
+    props.setOrgAidAppDocID(props.uid);
+  }
+
   const viewIncomeClick = () => {
     viewFiles(props.uid);
   }
 
   return (
-    <div className='record-aidDisAppCardWrapper'>
+    <div className='record-aidDisAppCardWrapper' onClick={recAidDisAppCardClick}>
         <Card className='record-aidDisAppCard'>
             <Card.Img variant="top" src={lightblue} className='record-aidDisAppCardImg'/>
             <Card.Body>

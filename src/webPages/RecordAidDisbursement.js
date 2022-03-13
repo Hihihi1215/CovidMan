@@ -2,8 +2,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom'
-import Navbar from '../components/Navbar';
 import RecordAidDisAppCard from '../components/RecordAidDisAppCard';
+import RecordAidDisbursementModal from '../components/RecordAidDisbursementModal';
 import '../css/RecordAidDisbursement.css'
 import { db, getOrgAppealByDocID } from '../firebase';
 import { useOrganisation } from '../OrganisationContext';
@@ -16,6 +16,12 @@ function RecordAidDisbursement() {
     const { orgDocID } = useOrganisation();
     const [ orgAidApplicants, setOrgAidApplicants ] = useState([]);
     const [ orgAppeal, setOrgAppeal ] = useState({});
+    const [ totalOrgAppealCash, setTotalOrgAppealCash ] = useState('');
+    const [ totalOrgAppealValue, setTotalOrgAppealValue ] = useState('');
+    const [ orgAidAppDocID, setOrgAidAppDocID ] = useState('');
+    const [ recAidDisModalShow, setRecAidDisModalShow ] = useState(false);
+    const handleRecAidDisModalShow = () => setRecAidDisModalShow(true);
+    const handleRecAidDisModalHide = () => setRecAidDisModalShow(false);
     const usersRef = collection(db, "users");
     const orgAidAppsQ = query(usersRef, where("orgDocID", "==", orgDocID), where("userType", "==", "aidApplicant"));
 
@@ -31,9 +37,15 @@ function RecordAidDisbursement() {
         return timestamp.toDate().toLocaleDateString();
     }
 
+    const setupOrgAppeal = (res) => {
+        setOrgAppeal(res);
+        setTotalOrgAppealCash(res.totalCash);
+        setTotalOrgAppealValue(res.totalEstimatedValue);
+    }
+
     useEffect(() => {
         getOrgAppealByDocID(appealDocID)
-            .then((res) => setOrgAppeal(res))
+            .then((res) => setupOrgAppeal(res))
         getOrgAidAppsByDocID()
     }, [])
 
@@ -49,8 +61,8 @@ function RecordAidDisbursement() {
                         <Col className='record-aidDisbursementDate'>To Date : {orgAppeal.toDate && convertTimestampToDateString(orgAppeal.toDate)}</Col>
                     </Row>
                     <Row className='record-aidDisbursementValueWrapper'>
-                        <Col className='record-aidDisbursementValue'>Total Cash : ${orgAppeal.totalCash}</Col>
-                        <Col className='record-aidDisbursementValue'>Total Estimated : ${orgAppeal.totalEstimatedValue}</Col>
+                        <Col className='record-aidDisbursementValue'>Total Cash : ${totalOrgAppealCash}</Col>
+                        <Col className='record-aidDisbursementValue'>Total Estimated : ${totalOrgAppealValue}</Col>
                     </Row>
                 </Container>
             </div>
@@ -62,11 +74,22 @@ function RecordAidDisbursement() {
                             name={orgAidApp.fullname}
                             income={orgAidApp.householdIncome}
                             address={orgAidApp.residentialAddress}
-                            uid={orgAidApp.uid}/>
+                            uid={orgAidApp.uid}
+                            setOrgAidAppDocID={setOrgAidAppDocID}
+                            handleRecAidDisModalShow={handleRecAidDisModalShow}/>
                     ))
                 }
             </div>
         </div>
+        <RecordAidDisbursementModal
+            totalCash={totalOrgAppealCash}
+            totalValue={totalOrgAppealValue}
+            appealDocID={appealDocID}
+            recAidDisModalShow={recAidDisModalShow}
+            handleRecAidDisModalHide={handleRecAidDisModalHide}
+            orgAidAppDocID={orgAidAppDocID}
+            setTotalOrgAppealCash={setTotalOrgAppealCash}
+            setTotalOrgAppealValue={setTotalOrgAppealValue}/>
     </div>
   )
 }
