@@ -1,16 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import '../css/Navbar.css'
+import { useUserAuth } from '../UserAuthContext';
 
 function Navbar() {
+
+    const user = useUserAuth();
+    const navigate = useNavigate();
+
+    const navigateOrgRepHomeOrHome = () => {
+        if(!user){
+            return <Navigate to='/'/>
+        }
+        else {
+            navigate('/OrgRepHome')
+        }
+    }
+
   return (
     <nav className='nav-bar'>
-        <Link to='/'
-            className='website-logoLink'>
-            <img 
-                src="https://fontmeme.com/permalink/220308/2742ac409365c06b7e11398c0224e18d.png" alt="spider-man-homecoming-font" border="0"
-                className='website-logo'/>
-        </Link>
+        <img 
+            src="https://fontmeme.com/permalink/220308/2742ac409365c06b7e11398c0224e18d.png" alt="spider-man-homecoming-font" border="0"
+            className='website-logo'
+            onClick={navigateOrgRepHomeOrHome}/>
         <ul className='navbar-liWrapper'>
             <li className='navbar-li'>
                 <Link to='/SignIn' className='navbar-links first-navbarLink'>Sign In</Link>

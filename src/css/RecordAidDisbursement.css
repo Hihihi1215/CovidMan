@@ -1,0 +1,66 @@
+.record-aidDisHeadBodyWrapper {
+  padding-top: 30px;
+  font-size: smaller;
+}
+
+.record-aidDisbursementHeader {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.record-aidDisbursementDateWrapper {
+  flex-direction: column;
+  margin-left: 0;
+}
+
+.record-aidDisbursementValueWrapper {
+  flex-direction: column;
+  margin-left: 0;
+}
+
+.record-aidDisbursementDate {
+  padding: 7px 0;
+}
+
+.record-aidDisbursementValue {
+  padding: 7px 0;
+}
+
+.record-aidDisbursementBody {
+  display: flex;
+  height: 385px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .record-aidDisbursementGrid {
+    padding: 0;
+    margin: 0;
+  }
+
+  .record-aidDisHeadBodyWrapper {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .record-aidDisbursementHeader {
+    text-align: unset;
+  }
+
+  .record-aidDisbursementBody {
+  }
+
+  .record-aidDisbursementDateWrapper {
+    flex-direction: row;
+  }
+
+  .record-aidDisbursementValueWrapper {
+    flex-direction: row;
+  }
+}
+
+#record-aidDisModalTitle {
+  margin: 0 auto;
+}

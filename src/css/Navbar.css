@@ -7,13 +7,9 @@
 .website-logo {
   object-fit: contain;
   width: 120px;
-  height: 20px;
-}
-
-.website-logoLink {
-  height: fit-content;
   padding: 10px 0;
-  margin-left: 10px;
+  margin-left: 35px;
+  cursor: pointer;
 }
 
 .navbar-liWrapper {

@@ -12,6 +12,10 @@ import ManageOrganization from './ManageOrganization';
 import AdminConfirmationModal from '../components/AdminConfirmationModal';
 import ViewAppeals from './ViewAppeals';
 import OrgRepHome from './OrgRepHome';
+import ProtectedRoute from './ProtectedRoute';
+import ViewOrgAppeals from './ViewOrgAppeals';
+import RecordAidDisbursement from './RecordAidDisbursement';
+import Navbar from '../components/Navbar';
 
 function App() {
 
@@ -24,8 +28,6 @@ function App() {
     <Router>
       <div className='app'>
         <Routes>
-          <Route path="*" 
-            element={<Navigate to="/Home" replace />} />
           <Route path='/Home' element={
             <>
               <Home/>
@@ -41,13 +43,36 @@ function App() {
               <SelectOrganisation/>
             </>
           }/>
-          <Route path='OrgRepHome' element={
-            <OrgRepHome/>
+          <Route path='/OrgRepHome' element={
+            <>
+              <ProtectedRoute>
+                <Navbar/>
+                <OrgRepHome/>
+              </ProtectedRoute>
+            </>
           }/>
-          <Route path='OrgRepHome/RegisterApp' element={
+          <Route path='/OrgRepHome/RegisterApp' element={
               <>
-                <RegisterAidApplicant showModal={showModal}/>
-                <AidAppConfirmationModal/>
+                <ProtectedRoute>
+                  <RegisterAidApplicant showModal={showModal}/>
+                  <AidAppConfirmationModal/>
+                </ProtectedRoute>
+              </>
+          }/>
+          <Route path='/OrgRepHome/ViewOrgAppeals' element={
+              <>
+                <ProtectedRoute>
+                  <Navbar/>
+                  <ViewOrgAppeals/>
+                </ProtectedRoute>
+              </>
+          }/>
+          <Route path='/OrgRepHome/RecordAidDisbursement' element={
+              <>
+                <ProtectedRoute>
+                  <Navbar/>
+                  <RecordAidDisbursement/>
+                </ProtectedRoute>
               </>
           }/>
           <Route path='/RegisterAdmin' element={
@@ -66,6 +91,8 @@ function App() {
               <ViewAppeals/>
             </>
           }/>
+          <Route path="*" 
+            element={<Navigate to="/Home" replace />} />
         </Routes>
       </div>
     </Router>

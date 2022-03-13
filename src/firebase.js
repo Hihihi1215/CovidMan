@@ -1,12 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { addDoc, arrayUnion, doc, getDoc, getFirestore, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendEmail } from "./emailjs";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 import { passwordGenerator } from "./PasswordGenerator";
+import { useNavigate } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,7 +29,16 @@ export const analytics = getAnalytics(app);
 
 // Authentication
 const auth = getAuth();
-export { auth, signInWithEmailAndPassword };
+export { auth, signInWithEmailAndPassword, onAuthStateChanged as authStateChanged };
+
+// Sign Out
+export const firebaseSignOut = () => {
+  signOut(auth).then(() => {
+    console.log('Sign-out successful.')
+  }).catch((error) => {
+    console.log('An error happened. ' + error.message)
+  });
+}
 
 // Firestore
 export const db = getFirestore();
@@ -49,6 +59,32 @@ const uploadFiles = (id, files) => {
       console.log('Uploaded a blob or file!');
     });
   })
+}
+
+// Download income files
+
+export const viewFiles = (uid) => {
+
+  const pathReference = ref(storage, uid);
+
+  // Find all the prefixes and items.
+
+  listAll(pathReference)
+    .then((res) => {
+      res.items.forEach((itemRef) => {
+        // All the items under listRef.
+        let itemPath = itemRef._location.path_;
+        getDownloadURL(ref(storage, itemPath))
+          .then((url) => {
+            window.open(url, "_blank");
+          })
+          .catch((error) => {
+            console.log(error.message)
+          });
+      });
+    }).catch((error) => {
+      console.log(error.message)
+    });
 }
 
 
@@ -167,6 +203,18 @@ export const getUserByUsername = async (username) => {
   }
 }
 
+export const getOrgAppealByDocID = async (appealDocID) => {
+  const docRef = doc(db, "appeals", appealDocID)
+  const docSnap = await getDoc(docRef);
+
+  if(docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
 export const getUserByUID = async (uid) => {
   const docRef = doc(db, "users", uid)
   const docSnap = await getDoc(docRef);
@@ -196,6 +244,37 @@ const addAidApplicantToOrg = async (orgDocID, uid) => {
   await updateDoc(orgRef, {
     aidApplicants : arrayUnion(uid)
   });
+}
+
+const updateAppeal = async (appealDocID, disbursementDocID, newTotalCash, newTotalEstimatedValue, newOutcome) => {
+  const appealRef = doc(db, "appeals", appealDocID)
+  await updateDoc(appealRef, {
+    totalCash : newTotalCash,
+    totalEstimatedValue : newTotalEstimatedValue,
+    disbursements : arrayUnion(disbursementDocID),
+    outcome : newOutcome
+  });
+}
+
+const addDisbursementToAidApp = async (aidAppDocID, disbursementDocID) => {
+  const aidAppRef = doc(db, "users", aidAppDocID)
+  await updateDoc(aidAppRef, {
+    disbursements : arrayUnion(disbursementDocID)
+  });
+}
+
+export const createDisbursement = async (disbursementDate, cashAmount, goodsDisbursed, appealDocID, aidAppDocID, newTotalCash,newTotalEstimatedValue, newOutcome) => {
+  // Add a new document with a generated id.
+  const docRef = await addDoc(collection(db, "disbursements"), {
+    disbursementDate : convertDateToTimestamp(disbursementDate),
+    cashAmount : cashAmount,
+    goodsDisbursed : goodsDisbursed,
+    appealDocID : appealDocID,
+    aidAppDocID : aidAppDocID
+  });
+
+  addDisbursementToAidApp(aidAppDocID, docRef.id);
+  updateAppeal(appealDocID, docRef.id, newTotalCash, newTotalEstimatedValue, newOutcome);
 }
 
 

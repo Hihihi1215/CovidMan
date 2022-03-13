@@ -1,11 +1,16 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
-import { useOrganisation } from '../OrganisationContext'
+import { Link, useNavigate } from 'react-router-dom'
+import { firebaseSignOut } from '../firebase';
 
 function OrgRepHome() {
 
-    const { orgName, orgDocID } = useOrganisation();
+  const navigate = useNavigate();
+
+  const signOut = () => {
+      firebaseSignOut();
+      navigate('/', { replace : true});
+  }
 
   return (
     <div className='org-repHomeWrapper'>
@@ -15,7 +20,10 @@ function OrgRepHome() {
         <Link to='/OrgRepHome/RegisterApp'>
             <Button variant="outline-primary">To Regiser Aid Applicant</Button>
         </Link>
-        {orgName}
+        <Link to='/OrgRepHome/ViewOrgAppeals'>
+          To View Org Appeals
+        </Link>
+        <Button onClick={signOut}>Sign Out</Button>
     </div>
   )
 }

@@ -1,0 +1,21 @@
+.view-orgAppealsHeader {
+  text-align: center;
+}
+
+.view-orgAppealsHeaderContent {
+  margin: 30px 0;
+}
+
+@media screen and (min-width: 576px) {
+  .view-orgAppealsHeader {
+    padding-left: 45px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: unset;
+  }
+}
+
+.view-orgAppealsBody {
+  padding-left: 20px;
+  display: flex;
+}
