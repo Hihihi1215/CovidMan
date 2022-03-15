@@ -1,0 +1,16 @@
+.organize-appealFormWrapper{
+      background-color: white;
+  width: 350px;
+  border-radius: 15px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.btn-organize{
+    margin-top: 15px;
+}

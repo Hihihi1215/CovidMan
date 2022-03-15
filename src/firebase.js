@@ -277,7 +277,6 @@ export const createDisbursement = async (disbursementDate, cashAmount, goodsDisb
   updateAppeal(appealDocID, docRef.id, newTotalCash, newTotalEstimatedValue, newOutcome);
 }
 
-
 // Registering an Aid Applicant
 export const createAidApplicant = (name, id, income, email, mobileNo, address, files, orgDocID) => {
   const password = passwordGenerator();
@@ -369,6 +368,39 @@ export const createCovidManAdmin = (adminNo, name, email, mobileNo) =>{
       console.log(error.code + " " + errorMessage);
     });
 }
+
+const addAidAppealToOrganization = async (orgDocID, appealDocID) =>{
+  const orgRef = doc(db, "organisations", orgDocID);
+  await updateDoc(orgRef, {
+    appeals: arrayUnion(appealDocID)
+  });
+}
+
+export const createAidAppeal = (fromDate, toDate, description, orgDocID) => {
+  const organizeAidAppeal = async () => {
+    const appealsRef = collection(db, 'appeals');
+    const snapshot = await getDocs(appealsRef)
+    var appealID = 'A' + (snapshot.docs.length + 1)
+    
+    const addAidAppeal = await addDoc(appealsRef, {
+      appealID: appealID,
+      fromDate: convertDateToTimestamp(fromDate),
+      toDate: convertDateToTimestamp(toDate),
+      description: description,
+      orgDocID: orgDocID,
+      outcome: "",
+      totalCash: 0,
+      totalEstimatedValue: 0,
+      contributions: [],
+      disbursements: []
+    }) 
+
+    addAidAppealToOrganization(orgDocID, addAidAppeal.id)
+  }
+
+  organizeAidAppeal();
+}
+
 
 export const convertDateToTimestamp = (today) => {
   return Timestamp.fromDate(today);
