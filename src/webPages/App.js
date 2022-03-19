@@ -18,6 +18,7 @@ import RecordAidDisbursement from './RecordAidDisbursement';
 import Navbar from '../components/Navbar';
 import OrganizeAidAppeal from './OrganizeAidAppeal';
 import OrganizeAppealConfirmationModal from '../components/OrganizeAppealConfirmationModal';
+import RecordContribution from './RecordContribution';
 
 function App() {
 
@@ -82,6 +83,14 @@ function App() {
                 <ProtectedRoute>
                   <OrganizeAidAppeal showModal={showModal}/>
                   <OrganizeAppealConfirmationModal/>
+                </ProtectedRoute>
+              </>
+          }/>
+          <Route path='/OrgRepHome/RecordContribution' element={
+              <>
+                <ProtectedRoute>
+                  <Navbar/>
+                  <RecordContribution/>
                 </ProtectedRoute>
               </>
           }/>

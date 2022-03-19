@@ -26,6 +26,9 @@ function OrgRepHome() {
         <Link to='/OrgRepHome/OrganizeAidAppeal'>
         <Button variant="outline-primary">Organize Aid Appeal</Button>
         </Link>
+        <Link to='/OrgRepHome/RecordContribution'>
+        <Button variant="outline-primary">Record Contribution</Button>
+        </Link>
         <Button onClick={signOut}>Sign Out</Button>
     </div>
   )
