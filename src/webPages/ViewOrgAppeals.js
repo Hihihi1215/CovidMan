@@ -1,6 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
 import ViewOrgAppealCard from '../components/ViewOrgAppealCard';
 import { convertDateToTimestamp, db } from '../firebase';
 import { useOrganisation } from '../OrganisationContext'
