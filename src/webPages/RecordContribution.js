@@ -5,20 +5,16 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import AppealCard from '../components/AppealCard';
 import { convertDateToTimestamp, db } from '../firebase';
 import RecordContributionModal from '../components/RecordContributionModal';
+import ConfirmationDialog from '../components/ConfimationDialog';
 
 
 
 function RecordContribution(){
     const { orgName, orgDocID } = useOrganisation();
     const [ appeals, setAppeals ] = useState([]);
-    const [ showRecordModal, setShowRecordModal ] = useState(false);
-    const [ appealID, setAppealID ] = useState('')
-    const [ fromDate, setFromDate ] = useState('')
-    const [ toDate, setToDate ] = useState('')
-    const [ description, setDescription ] = useState('')
-    const [ appealDocID, setAppealDocID ] = useState('')
     const [ key, setKey ] = useState('');
     const [ recordComp, setRecordComp ] = useState([]);
+    const [confimationModalShow, setConfimationModalShow] = React.useState(false);
 
     const today = new Date();
     const appealRef = collection(db, "appeals");
@@ -69,10 +65,17 @@ function RecordContribution(){
                                 onHide={() => setKey('')}
                                 appealID={appeal.appealID}
                                 fromDate={appeal.fromDate}
-                                toDate={appeal.toDate}/>
+                                toDate={appeal.toDate}
+                                appealDocID={appeal.id}
+                                onShowConfimation={()=> setConfimationModalShow(true)}/>
                         )
                     })
                 }
+                <ConfirmationDialog
+                    show={confimationModalShow}
+                    onHide={() => setConfimationModalShow(false)}
+                    title='Record Contribution Successfully!'
+                    body='A contribution has been recorded successfully.'/>
         </div>
     )
 }

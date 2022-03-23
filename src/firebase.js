@@ -401,6 +401,64 @@ export const createAidAppeal = (fromDate, toDate, description, orgDocID) => {
   organizeAidAppeal();
 }
 
+const addGoodsContributionToAppeal = async (appealDocID, contributionDocID, estimatedValue) => {
+  const appealRef = doc(db, "appeals", appealDocID);
+  const snapshot = await getDoc(appealRef)
+  await updateDoc(appealRef, {
+    contributions: arrayUnion(contributionDocID),
+    totalEstimatedValue: estimatedValue + snapshot.data().totalEstimatedValue
+  });
+}
+
+const addCashContributionToAppeal = async (appealDocID, contributionDocID, amount) => {
+  const appealRef = doc(db, "appeals", appealDocID);
+  const snapshot = await getDoc(appealRef)
+  await updateDoc(appealRef, {
+    contributions: arrayUnion(contributionDocID),
+    totalCash: amount + snapshot.data().totalCash
+  });
+}
+
+export const createGoodsContribution = (description, estimatedValue, appealDocID) => {
+  const recordGoodsContribution = async () =>{
+    const contributionRef = collection(db, 'contributions');
+    const snapshot = await getDocs(contributionRef);
+    var contributionID = 'C' + (snapshot.docs.length + 1)
+    const today = new Date();
+
+    const addGoodsContribution = await addDoc(contributionRef, {
+      contributionID: contributionID,
+      description: description,
+      estimatedValue: estimatedValue,
+      contributionType: 'goods',
+      receivedDate: convertDateToTimestamp(today),
+      appealDocID: appealDocID
+    })
+    addGoodsContributionToAppeal(appealDocID, addGoodsContribution.id, estimatedValue)
+  }
+  recordGoodsContribution()
+}
+
+export const createCashContribution = (paymentChannel, referenceNo, amount, appealDocID) => {
+  const recordCashContribution = async () =>{
+    const contributionRef = collection(db, 'contributions');
+    const snapshot = await getDocs(contributionRef);
+    var contributionID = 'C' + (snapshot.docs.length + 1)
+    const today = new Date();
+
+    const addCashContribution = await addDoc(contributionRef, {
+      contributionID: contributionID,
+      paymentChannel: paymentChannel,
+      amount: amount,
+      referenceNo: referenceNo,
+      contributionType: 'cash',
+      receivedDate: convertDateToTimestamp(today),
+      appealDocID: appealDocID
+    })
+    addCashContributionToAppeal(appealDocID, addCashContribution.id, amount)
+  }
+  recordCashContribution()
+}
 
 export const convertDateToTimestamp = (today) => {
   return Timestamp.fromDate(today);
