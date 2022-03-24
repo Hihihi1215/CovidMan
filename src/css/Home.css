@@ -1,0 +1,85 @@
+.cool-hero__wrapper {
+  background-image: url("../img/givingbread.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+  position: relative;
+}
+
+.cool-hero__quote {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  animation: cool-hero-quote-fade-in linear 0.8s;
+}
+
+@keyframes cool-hero-quote-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blankStuff {
+  height: 400px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+  .cool-hero__quote {
+    font-size: 36px;
+    right: 10%;
+  }
+}
+
+.about-us__section {
+  width: 100%;
+}
+
+.about-us__wrapper {
+  width: 70%;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.about-us__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-us__header > h3 {
+  margin-right: 20px;
+}
+
+@media screen and (min-width: 992px) {
+  .about-us__wrapper {
+    width: 60%;
+  }
+
+  .about-us__header {
+    justify-content: unset;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .about-us__wrapper {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .about-us__wrapper {
+    width: 40%;
+  }
+}
+
+.about-us__body > p {
+  font-size: larger;
+}
