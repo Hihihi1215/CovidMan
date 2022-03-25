@@ -19,9 +19,11 @@
 
 @keyframes cool-hero-quote-fade-in {
   0% {
+    transform: translateY(2%);
     opacity: 0;
   }
   100% {
+    transform: translateY(0);
     opacity: 1;
   }
 }
@@ -52,6 +54,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease-in-out;
+}
+
+.about-us-header-fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-us__body {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease-in-out;
+}
+
+.about-us-body-fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes about-us-header-fade-in-anim {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .about-us__header > h3 {
@@ -82,4 +114,141 @@
 
 .about-us__body > p {
   font-size: larger;
+}
+
+.spiderman-hero__wrapper {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+.spiderman-hero-zoom-in {
+  height: 200px !important;
+}
+
+.spiderman-hero {
+  object-fit: cover;
+  height: 0;
+  width: 100%;
+  position: absolute;
+  object-position: 0% 10%;
+  z-index: -1;
+  transition: all 0.3s ease-in-out;
+}
+
+.spiderman-hero__quote {
+  font-size: 24px;
+  color: white;
+  padding-left: 5%;
+  line-height: 60px;
+}
+
+.team-section {
+  width: 100%;
+  padding: 50px 0;
+}
+
+.the-team__wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.the-team__title {
+  font-size: 24px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease-in-out;
+}
+
+.the-team__title--fadein {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.the-team-body {
+  display: flex;
+}
+
+.team-member__card {
+  margin-right: 50px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.team-member__card--fadein {
+  opacity: 1;
+}
+
+.team-member__pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+}
+
+.team-member__pic--koroSensei {
+  background-image: url("../img/koroSensei.jpg");
+}
+
+.team-member__pic--koroSensei2 {
+  background-image: url("../img/koroSensei2.jpg");
+}
+
+.team-member__card > p {
+  text-align: center;
+  font-size: 18px;
+}
+
+@media screen and (min-width: 992px) {
+  .the-team__wrapper {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .the-team__wrapper {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .the-team__wrapper {
+    width: 40%;
+  }
+}
+
+.covid-man-footer {
+  background-color: #43c9ff;
+  margin-bottom: -15px;
+}
+
+.covid-man-footer__wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.covid-man-footer__header {
+  font-size: 24px;
+  /* font-weight: bold; */
+  color: white;
+  padding: 20px 0;
+}
+
+.covid-man-footer__body {
+  color: white;
+  padding: 10px 0;
+  font-weight: lighter;
+}
+
+@media screen and (min-width: 992px) {
+  .covid-man-footer__wrapper {
+    width: 90%;
+  }
 }
