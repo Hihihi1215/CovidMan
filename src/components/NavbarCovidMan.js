@@ -50,10 +50,12 @@ function NavbarCovidMan() {
                         </ul>
                     ) :
                     (
-                        <Button onClick={signOut} className='navbar-links signout-link'>Sign Out</Button>
+                        <>
+                            <Button onClick={signOut} className='navbar-links signout-link'>Sign Out</Button>
+                            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        </>
                     )
             }
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Offcanvas placement="end" className="navbar-offcanvas">
                 <Offcanvas.Header closeButton>
                 </Offcanvas.Header>
