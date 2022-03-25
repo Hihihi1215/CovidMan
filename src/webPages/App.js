@@ -15,7 +15,7 @@ import OrgRepHome from './OrgRepHome';
 import ProtectedRoute from './ProtectedRoute';
 import ViewOrgAppeals from './ViewOrgAppeals';
 import RecordAidDisbursement from './RecordAidDisbursement';
-import Navbar from '../components/Navbar';
+import NavbarCovidMan from '../components/NavbarCovidMan';
 import OrganizeAidAppeal from './OrganizeAidAppeal';
 import OrganizeAppealConfirmationModal from '../components/OrganizeAppealConfirmationModal';
 import RecordContribution from './RecordContribution';
@@ -33,6 +33,7 @@ function App() {
         <Routes>
           <Route path='/Home' element={
             <>
+              <NavbarCovidMan/>
               <Home/>
             </>
           }/>
@@ -49,7 +50,7 @@ function App() {
           <Route path='/OrgRepHome' element={
             <>
               <ProtectedRoute>
-                <Navbar/>
+                <NavbarCovidMan/>
                 <OrgRepHome/>
               </ProtectedRoute>
             </>
@@ -65,7 +66,7 @@ function App() {
           <Route path='/OrgRepHome/ViewOrgAppeals' element={
               <>
                 <ProtectedRoute>
-                  <Navbar/>
+                  <NavbarCovidMan/>
                   <ViewOrgAppeals/>
                 </ProtectedRoute>
               </>
@@ -73,7 +74,7 @@ function App() {
           <Route path='/OrgRepHome/RecordAidDisbursement' element={
               <>
                 <ProtectedRoute>
-                  <Navbar/>
+                  <NavbarCovidMan/>
                   <RecordAidDisbursement/>
                 </ProtectedRoute>
               </>

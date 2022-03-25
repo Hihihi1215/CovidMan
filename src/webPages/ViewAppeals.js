@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import AppealCard from '../components/AppealCard'
-import Navbar from '../components/Navbar'
+import NavbarCovidMan from '../components/NavbarCovidMan'
 import '../css/ViewAppeals.css'
 import { convertDateToTimestamp, db, getOrgByDocID } from '../firebase';
 
@@ -55,7 +55,7 @@ function ViewAppeals() {
 
   return (
     <div className='view-appealsPage'>
-        <Navbar/>
+        <NavbarCovidMan/>
         <div className='view-appealsHeader'>
             <h1>Appeals</h1>
             <div className='past-presentWrapper'>

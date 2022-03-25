@@ -1,15 +1,25 @@
-.nav-bar {
+.navbar-covidman {
   padding: 10px;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+}
+
+.navbar-covidman__wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
 .website-logo {
   object-fit: contain;
   width: 120px;
   padding: 10px 0;
-  margin-left: 35px;
   cursor: pointer;
+}
+
+.navbar-offcanvas {
+  width: 250px;
 }
 
 .navbar-liWrapper {
@@ -19,19 +29,67 @@
   justify-content: space-between;
 }
 
+.signout-link {
+  background-color: transparent;
+}
+
+.orgRep-navbar-links {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 576px) {
+  .navbar-covidman {
+    padding: 0 20px 0 0;
+    display: block;
+  }
+
+  .navbar-covidman__wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .website-logo {
+    margin-left: 35px;
+  }
+
+  .navbar-links {
+    margin: 0 auto;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .navbar-liWrapper {
-    margin-right: 100px;
     width: 400px;
   }
   .website-logoLink {
     margin-left: 35px;
   }
+
+  .signout-link {
+    margin-left: 400px !important;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .signout-link {
+    margin-left: 600px !important;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .navbar-liWrapper {
-    margin-right: 300px;
+    margin-left: 300px;
+  }
+
+  .signout-link {
+    margin-left: 800px !important;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .signout-link {
+    margin-left: 1000px !important;
   }
 }
 
@@ -47,6 +105,7 @@
   padding: 10px 20px;
   border-radius: 50px;
   transition: all 0.3s ease-in-out;
+  margin: 10px auto;
 }
 
 .navbar-links:hover {
