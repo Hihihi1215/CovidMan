@@ -14,7 +14,7 @@ function OrgRepHome() {
 
   return (
     <div className='org-repHomeWrapper'>
-        
+
     </div>
   )
 }

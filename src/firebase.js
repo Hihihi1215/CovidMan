@@ -277,7 +277,6 @@ export const createDisbursement = async (disbursementDate, cashAmount, goodsDisb
   updateAppeal(appealDocID, docRef.id, newTotalCash, newTotalEstimatedValue, newOutcome);
 }
 
-
 // Registering an Aid Applicant
 export const createAidApplicant = (name, id, income, email, mobileNo, address, files, orgDocID) => {
   const password = passwordGenerator();
@@ -368,6 +367,97 @@ export const createCovidManAdmin = (adminNo, name, email, mobileNo) =>{
       const errorMessage = error.message;
       console.log(error.code + " " + errorMessage);
     });
+}
+
+const addAidAppealToOrganization = async (orgDocID, appealDocID) =>{
+  const orgRef = doc(db, "organisations", orgDocID);
+  await updateDoc(orgRef, {
+    appeals: arrayUnion(appealDocID)
+  });
+}
+
+export const createAidAppeal = (fromDate, toDate, description, orgDocID) => {
+  const organizeAidAppeal = async () => {
+    const appealsRef = collection(db, 'appeals');
+    const snapshot = await getDocs(appealsRef)
+    var appealID = 'A' + (snapshot.docs.length + 1)
+    
+    const addAidAppeal = await addDoc(appealsRef, {
+      appealID: appealID,
+      fromDate: convertDateToTimestamp(fromDate),
+      toDate: convertDateToTimestamp(toDate),
+      description: description,
+      orgDocID: orgDocID,
+      outcome: "",
+      totalCash: 0,
+      totalEstimatedValue: 0,
+      contributions: [],
+      disbursements: []
+    }) 
+
+    addAidAppealToOrganization(orgDocID, addAidAppeal.id)
+  }
+
+  organizeAidAppeal();
+}
+
+const addGoodsContributionToAppeal = async (appealDocID, contributionDocID, estimatedValue) => {
+  const appealRef = doc(db, "appeals", appealDocID);
+  const snapshot = await getDoc(appealRef)
+  await updateDoc(appealRef, {
+    contributions: arrayUnion(contributionDocID),
+    totalEstimatedValue: estimatedValue + snapshot.data().totalEstimatedValue
+  });
+}
+
+const addCashContributionToAppeal = async (appealDocID, contributionDocID, amount) => {
+  const appealRef = doc(db, "appeals", appealDocID);
+  const snapshot = await getDoc(appealRef)
+  await updateDoc(appealRef, {
+    contributions: arrayUnion(contributionDocID),
+    totalCash: amount + snapshot.data().totalCash
+  });
+}
+
+export const createGoodsContribution = (description, estimatedValue, appealDocID) => {
+  const recordGoodsContribution = async () =>{
+    const contributionRef = collection(db, 'contributions');
+    const snapshot = await getDocs(contributionRef);
+    var contributionID = 'C' + (snapshot.docs.length + 1)
+    const today = new Date();
+
+    const addGoodsContribution = await addDoc(contributionRef, {
+      contributionID: contributionID,
+      description: description,
+      estimatedValue: estimatedValue,
+      contributionType: 'goods',
+      receivedDate: convertDateToTimestamp(today),
+      appealDocID: appealDocID
+    })
+    addGoodsContributionToAppeal(appealDocID, addGoodsContribution.id, estimatedValue)
+  }
+  recordGoodsContribution()
+}
+
+export const createCashContribution = (paymentChannel, referenceNo, amount, appealDocID) => {
+  const recordCashContribution = async () =>{
+    const contributionRef = collection(db, 'contributions');
+    const snapshot = await getDocs(contributionRef);
+    var contributionID = 'C' + (snapshot.docs.length + 1)
+    const today = new Date();
+
+    const addCashContribution = await addDoc(contributionRef, {
+      contributionID: contributionID,
+      paymentChannel: paymentChannel,
+      amount: amount,
+      referenceNo: referenceNo,
+      contributionType: 'cash',
+      receivedDate: convertDateToTimestamp(today),
+      appealDocID: appealDocID
+    })
+    addCashContributionToAppeal(appealDocID, addCashContribution.id, amount)
+  }
+  recordCashContribution()
 }
 
 export const convertDateToTimestamp = (today) => {

@@ -1,0 +1,21 @@
+.record-contributionHeader{
+    text-align: center;
+}
+
+.record-contributionBody{
+    padding-left: 20px;
+    display: flex;
+}
+
+.record-contributionHeader > h3, h4{
+    margin: 30px 0;
+}
+
+@media screen and (min-width: 576px) {
+    .record-contributionHeader {
+     padding-left: 45px;
+     padding-top: 20px;
+     padding-bottom: 20px;
+     text-align: unset;
+   }
+ }

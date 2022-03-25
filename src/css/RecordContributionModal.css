@@ -1,0 +1,17 @@
+.view-currentAppeal{
+    background-color: yellow;
+    border-radius: 15px;
+    height: auto;
+    width: auto;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.select-paymentChannel{
+    width: 100%;
+    margin-top: 10px;
+}
