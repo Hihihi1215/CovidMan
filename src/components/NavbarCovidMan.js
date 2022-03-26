@@ -64,7 +64,6 @@ function NavbarCovidMan() {
                         userType === "orgRep"?
                             (
                                 <>
-                                    <Link to="/ViewAppeals" className='navbar-links orgRep-navbar-links'>View Appeals</Link>
                                     <Link to='/OrgRepHome/RegisterApp' className='navbar-links orgRep-navbar-links'>Regiser Aid Applicant</Link>
                                     <Link to='/OrgRepHome/ViewOrgAppeals' className='navbar-links orgRep-navbar-links'>View Org Appeals</Link>
                                 </>

@@ -16,6 +16,7 @@ import ProtectedRoute from './ProtectedRoute';
 import ViewOrgAppeals from './ViewOrgAppeals';
 import RecordAidDisbursement from './RecordAidDisbursement';
 import NavbarCovidMan from '../components/NavbarCovidMan';
+import SignUp from './SignUp';
 
 function App() {
 
@@ -37,6 +38,11 @@ function App() {
           <Route path='/SignIn' element={
             <>
               <SignIn/>
+            </>
+          }/>
+          <Route path='/SignUp' element={
+            <>
+              <SignUp/>
             </>
           }/>
           <Route path='/SelectOrg' element={
