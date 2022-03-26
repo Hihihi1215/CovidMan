@@ -1,9 +1,11 @@
+
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom'
 import RecordAidDisAppCard from '../components/RecordAidDisAppCard';
 import RecordAidDisbursementModal from '../components/RecordAidDisbursementModal';
+import RecordOutcomeModal from '../components/RecordOutcomeModal';
 import '../css/RecordAidDisbursement.css'
 import { db, getOrgAppealByDocID } from '../firebase';
 import { useOrganisation } from '../OrganisationContext';
@@ -22,6 +24,9 @@ function RecordAidDisbursement() {
     const [ recAidDisModalShow, setRecAidDisModalShow ] = useState(false);
     const handleRecAidDisModalShow = () => setRecAidDisModalShow(true);
     const handleRecAidDisModalHide = () => setRecAidDisModalShow(false);
+    const [ recOutcomeShow, setRecOutcomeShow ] = useState(false);
+    const handleRecOutcomeModalShow = () => setRecOutcomeShow(true);
+    const handleRecOutcomeModalHide = () => setRecOutcomeShow(false);
     const usersRef = collection(db, "users");
     const orgAidAppsQ = query(usersRef, where("orgDocID", "==", orgDocID), where("userType", "==", "aidApplicant"));
 
@@ -65,6 +70,7 @@ function RecordAidDisbursement() {
                         <Col className='record-aidDisbursementValue'>Total Estimated : ${totalOrgAppealValue}</Col>
                     </Row>
                 </Container>
+                <Button onClick={handleRecOutcomeModalShow} className='record-outcome-btn'>Record Outcome</Button>
             </div>
             <div className='record-aidDisbursementBody'>
                 {
@@ -90,6 +96,10 @@ function RecordAidDisbursement() {
             orgAidAppDocID={orgAidAppDocID}
             setTotalOrgAppealCash={setTotalOrgAppealCash}
             setTotalOrgAppealValue={setTotalOrgAppealValue}/>
+        <RecordOutcomeModal
+            recOutcomeShow={recOutcomeShow}
+            handleRecOutcomeModalHide={handleRecOutcomeModalHide}
+            appealDocID={appealDocID}/>
     </div>
   )
 }
