@@ -15,7 +15,6 @@ function NavbarCovidMan() {
 
     const navigateOrgRepHomeOrHome = () => {
         if(!user){
-            console.log('hi')
             navigate('/')
         }
         else {
