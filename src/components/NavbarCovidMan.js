@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Navbar, Offcanvas } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import '../css/Navbar.css'
 import { firebaseSignOut } from '../firebase';
 import { useUserAuth, useUserType } from '../UserAuthContext';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 function NavbarCovidMan() {
 
@@ -13,7 +15,8 @@ function NavbarCovidMan() {
 
     const navigateOrgRepHomeOrHome = () => {
         if(!user){
-            return <Navigate to='/'/>
+            console.log('hi')
+            navigate('/')
         }
         else {
             if(userType === "orgRep"){
@@ -26,6 +29,32 @@ function NavbarCovidMan() {
         firebaseSignOut();
         navigate('/', { replace : true});
     }
+
+    useEffect(() => {
+        const navbarCovidMan = document.querySelector('.navbar-covidman');
+
+        const showAnim = gsap.from('.navbar-covidman', { 
+            yPercent: -100,
+            duration: 0.3
+        }).progress(1);
+        
+        ScrollTrigger.create({
+            start: "top top",
+            end: 99999,
+            onUpdate: (self) => {
+                self.direction === -1 ? showAnim.play() : showAnim.reverse()
+        }
+        });
+        window.addEventListener('scroll', e => {
+            const scroll = window.scrollY;
+            if(scroll > 0 ) {
+                console.log('hi')
+                navbarCovidMan.classList.add('navbar-covidman--black');
+            } else {
+                navbarCovidMan.classList.remove('navbar-covidman--black');
+            }
+        })
+    }, [])
 
   return (
     <Navbar collapseOnSelect expand={false} className='navbar-covidman'>
