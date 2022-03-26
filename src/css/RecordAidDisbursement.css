@@ -7,6 +7,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 120px;
+}
+
+.record-outcome-btn {
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .record-aidDisbursementDateWrapper {
@@ -32,6 +38,12 @@
   height: 385px;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+
+@media screen and (min-width: 576px) {
+  .record-aidDisbursementHeader {
+    margin-top: 50px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -63,4 +75,23 @@
 
 #record-aidDisModalTitle {
   margin: 0 auto;
+}
+
+.aid-disbursed-toast {
+  position: fixed;
+  top: 0%;
+  right: 0;
+  width: 150px;
+  background-color: #43c9ff;
+  color: white;
+  transform: translateY(200%);
+}
+
+.aid-disbursed-toast__body {
+  position: relative;
+}
+
+.aid-disbursed-toast__close-btn {
+  position: absolute;
+  right: 8%;
 }

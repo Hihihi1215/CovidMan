@@ -2,19 +2,13 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import '../css/AidAppConfirmationModal.css';
-import { useUserAuth } from '../UserAuthContext';
 
-function AidAppConfirmationModal() {
+function RecordOutcomeSuccess() {
 
   const navigate = useNavigate();
-  const user = useUserAuth();
 
-  const registerSuccess = () => {
-    if(user) {
-      navigate('/OrgRepHome', { replace: true });
-    } else {
-      navigate('/', { replace: true })
-    }
+  const recOutcomeSuccess = () => {
+    navigate('/OrgRepHome', { replace: true });
   }
 
   return (
@@ -26,11 +20,10 @@ function AidAppConfirmationModal() {
       <label className='check-iconLabel'>
         <div className='check-icon'></div>
       </label>
-      <h3 className='confirmation-modalWords'>Aid Applicant Registered Successfully!</h3>
-      <h3 className='confirmation-modalWords'>Please check your mail box for your <br></br>username and password</h3>
-      <Button onClick={registerSuccess} className='app-confirmationOkBtn'>OK</Button>
+      <h3 className='confirmation-modalWords'>Outcome Recorded Successfully!</h3>
+      <Button onClick={recOutcomeSuccess} className='app-confirmationOkBtn'>OK</Button>
     </div>
   );
 }
 
-export default AidAppConfirmationModal
+export default RecordOutcomeSuccess

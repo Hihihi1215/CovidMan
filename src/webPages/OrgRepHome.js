@@ -1,21 +1,10 @@
 import React from 'react'
-import { Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom'
-import { firebaseSignOut } from '../firebase';
+import Home from './Home'
 
 function OrgRepHome() {
 
-  const navigate = useNavigate();
-
-  const signOut = () => {
-      firebaseSignOut();
-      navigate('/', { replace : true});
-  }
-
   return (
-    <div className='org-repHomeWrapper'>
-
-    </div>
+    <Home></Home>
   )
 }
 

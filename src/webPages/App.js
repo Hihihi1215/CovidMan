@@ -19,6 +19,7 @@ import NavbarCovidMan from '../components/NavbarCovidMan';
 import OrganizeAidAppeal from './OrganizeAidAppeal';
 import OrganizeAppealConfirmationModal from '../components/OrganizeAppealConfirmationModal';
 import RecordContribution from './RecordContribution';
+import RecordOutcomeSuccess from '../components/RecordOutcomeSuccess';
 
 function App() {
 
@@ -75,7 +76,8 @@ function App() {
               <>
                 <ProtectedRoute>
                   <NavbarCovidMan/>
-                  <RecordAidDisbursement/>
+                  <RecordAidDisbursement showRecordSuccess={showModal}/>
+                  <RecordOutcomeSuccess/>
                 </ProtectedRoute>
               </>
           }/>
@@ -90,7 +92,7 @@ function App() {
           <Route path='/OrgRepHome/RecordContribution' element={
               <>
                 <ProtectedRoute>
-                  <Navbar/>
+                  <NavbarCovidMan/>
                   <RecordContribution/>
                 </ProtectedRoute>
               </>

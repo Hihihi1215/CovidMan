@@ -9,6 +9,7 @@ function ViewAppeals() {
 
     const [ appeals, setAppeals ] = useState([]);
     const today = new Date();
+    today.setDate(today.getDate() - 1);
     const appealsRef = collection(db, "appeals");
 
     const getAppeals = async (logicalOp) => {

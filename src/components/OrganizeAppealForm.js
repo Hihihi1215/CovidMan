@@ -13,6 +13,7 @@ function OrganizeAppealForm(props){
     const [ description, setDescription ] = useState('');
     const { orgName, orgDocID } = useOrganisation();
     const today = new Date();
+    today.setDate(today.getDate() - 1);
 
     const inputBlank = (inputGroupName) => {
         const tooltip = document.querySelector(`#${inputGroupName}-tooltip`);
@@ -42,7 +43,11 @@ function OrganizeAppealForm(props){
             if(fromDateObject < today){
                 e.preventDefault();
                 inputBlank('fromDate')
-            }else{
+            } else if(toDateObject < today){
+                e.preventDefault();
+                inputBlank('toDate');
+            }
+            else{
                 props.blurThePage();
                 props.showModal();
                 props.showCheckMarkAnimation();

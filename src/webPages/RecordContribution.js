@@ -17,6 +17,7 @@ function RecordContribution(){
     const [confimationModalShow, setConfimationModalShow] = React.useState(false);
 
     const today = new Date();
+    today.setDate(today.getDate() - 1);
     const appealRef = collection(db, "appeals");
     const qry = query(appealRef, where("toDate", ">=", convertDateToTimestamp(today)), where("orgDocID", "==", orgDocID))
 

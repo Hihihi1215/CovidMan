@@ -1,0 +1,11 @@
+.record-outcome__header > .btn-close {
+  margin: 0;
+}
+
+.record-outcome__title {
+  margin: 0 auto;
+}
+
+.record-outcome-modal__submit-btn {
+  border-radius: 50px;
+}

@@ -1,15 +1,18 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Toast } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom'
 import RecordAidDisAppCard from '../components/RecordAidDisAppCard';
 import RecordAidDisbursementModal from '../components/RecordAidDisbursementModal';
+import RecordOutcomeModal from '../components/RecordOutcomeModal';
 import '../css/RecordAidDisbursement.css'
 import { db, getOrgAppealByDocID } from '../firebase';
 import { useOrganisation } from '../OrganisationContext';
 
-function RecordAidDisbursement() {
+function RecordAidDisbursement(props) {
 
+    const [showToast, setShowToast ] = useState(false);
+    const handleShowToast = () => setShowToast(true);
     const location = useLocation();
     const appealDocIDState = location.state;
     const appealDocID = appealDocIDState.appealDocID;
@@ -22,8 +25,24 @@ function RecordAidDisbursement() {
     const [ recAidDisModalShow, setRecAidDisModalShow ] = useState(false);
     const handleRecAidDisModalShow = () => setRecAidDisModalShow(true);
     const handleRecAidDisModalHide = () => setRecAidDisModalShow(false);
+    const [ recOutcomeShow, setRecOutcomeShow ] = useState(false);
+    const handleRecOutcomeModalShow = () => setRecOutcomeShow(true);
+    const handleRecOutcomeModalHide = () => setRecOutcomeShow(false);
     const usersRef = collection(db, "users");
     const orgAidAppsQ = query(usersRef, where("orgDocID", "==", orgDocID), where("userType", "==", "aidApplicant"));
+
+    const showCheckMarkAnimation = () => {
+        const checkIcon = document.querySelector('.check-icon');
+        const checkIconLabel = document.querySelector('.check-iconLabel');
+        setTimeout(() => {
+          checkIcon.style.display = 'block';
+          checkIconLabel.style = `
+            animation : none;
+            border-color : #43c9ff;
+            transition : border 1s ease-out
+          `
+        }, 1000);
+    }
 
     const getOrgAidAppsByDocID = async () => {
         const querySnapshot = await getDocs(orgAidAppsQ);
@@ -65,6 +84,7 @@ function RecordAidDisbursement() {
                         <Col className='record-aidDisbursementValue'>Total Estimated : ${totalOrgAppealValue}</Col>
                     </Row>
                 </Container>
+                <Button onClick={handleRecOutcomeModalShow} className='record-outcome-btn'>Record Outcome</Button>
             </div>
             <div className='record-aidDisbursementBody'>
                 {
@@ -81,6 +101,12 @@ function RecordAidDisbursement() {
                 }
             </div>
         </div>
+        <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide className='aid-disbursed-toast'>
+          <Toast.Body className='aid-disbursed-toast__body'>
+              Aid Disbursed!
+            <button type="button" class="btn-close aid-disbursed-toast__close-btn" aria-label="Close" onClick={() => setShowToast(false)}></button>
+          </Toast.Body>
+        </Toast>
         <RecordAidDisbursementModal
             totalCash={totalOrgAppealCash}
             totalValue={totalOrgAppealValue}
@@ -89,7 +115,14 @@ function RecordAidDisbursement() {
             handleRecAidDisModalHide={handleRecAidDisModalHide}
             orgAidAppDocID={orgAidAppDocID}
             setTotalOrgAppealCash={setTotalOrgAppealCash}
-            setTotalOrgAppealValue={setTotalOrgAppealValue}/>
+            setTotalOrgAppealValue={setTotalOrgAppealValue}
+            handleShowToast={handleShowToast}/>
+        <RecordOutcomeModal
+            showCheckMarkAnimation={showCheckMarkAnimation}
+            recOutcomeShow={recOutcomeShow}
+            handleRecOutcomeModalHide={handleRecOutcomeModalHide}
+            appealDocID={appealDocID}
+            showRecordSuccess={props.showRecordSuccess}/>
     </div>
   )
 }

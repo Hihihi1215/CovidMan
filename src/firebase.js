@@ -246,12 +246,18 @@ const addAidApplicantToOrg = async (orgDocID, uid) => {
   });
 }
 
-const updateAppeal = async (appealDocID, disbursementDocID, newTotalCash, newTotalEstimatedValue, newOutcome) => {
+const updateAppealValue = async (appealDocID, disbursementDocID, newTotalCash, newTotalEstimatedValue) => {
   const appealRef = doc(db, "appeals", appealDocID)
   await updateDoc(appealRef, {
     totalCash : newTotalCash,
     totalEstimatedValue : newTotalEstimatedValue,
-    disbursements : arrayUnion(disbursementDocID),
+    disbursements : arrayUnion(disbursementDocID)
+  });
+}
+
+export const updateAppealOutcome = async (appealDocID, newOutcome) => {
+  const appealRef = doc(db, "appeals", appealDocID)
+  await updateDoc(appealRef, {
     outcome : newOutcome
   });
 }
@@ -263,7 +269,7 @@ const addDisbursementToAidApp = async (aidAppDocID, disbursementDocID) => {
   });
 }
 
-export const createDisbursement = async (disbursementDate, cashAmount, goodsDisbursed, appealDocID, aidAppDocID, newTotalCash,newTotalEstimatedValue, newOutcome) => {
+export const createDisbursement = async (disbursementDate, cashAmount, goodsDisbursed, appealDocID, aidAppDocID, newTotalCash,newTotalEstimatedValue) => {
   // Add a new document with a generated id.
   const docRef = await addDoc(collection(db, "disbursements"), {
     disbursementDate : convertDateToTimestamp(disbursementDate),
@@ -274,7 +280,7 @@ export const createDisbursement = async (disbursementDate, cashAmount, goodsDisb
   });
 
   addDisbursementToAidApp(aidAppDocID, docRef.id);
-  updateAppeal(appealDocID, docRef.id, newTotalCash, newTotalEstimatedValue, newOutcome);
+  updateAppealValue(appealDocID, docRef.id, newTotalCash, newTotalEstimatedValue);
 }
 
 // Registering an Aid Applicant

@@ -18,6 +18,7 @@ function ViewOrgAppeals() {
     const handleShowContributions = () => setShowContributions(true);
 
     const today = new Date();
+    today.setDate(today.getDate() - 1);
     const orgAppealsRef = collection(db, "appeals");
     const combinedQ = query(orgAppealsRef, where("toDate", ">=", convertDateToTimestamp(today)), where("orgDocID", "==", orgDocID));
 

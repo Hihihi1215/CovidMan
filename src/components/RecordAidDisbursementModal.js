@@ -10,15 +10,16 @@ function RecordAidDisbursementModal(props) {
     const [ cash, setCash ] = useState('');
     const [ disbursementDate, setDisbursementDate ] = useState('');
     const [ goodsValue, setGoodsValue ] = useState('');
-    const [ outcome, setOutcome ] = useState('');
     const today = new Date();
-    const valueRegex = /^[1-9]+$/;
+    today.setDate(today.getDate() - 1);
+    const valueRegex = /^[1-9]+[0-9]*$/;
 
     const testValue = (total, value) => {
         if(valueRegex.test(value)){
             let x = parseInt(value);
             return (x < 1 || x > total);
         } else {
+            console.log('hi')
             return true;
         }
     }
@@ -36,7 +37,7 @@ function RecordAidDisbursementModal(props) {
     }
 
     const handleRecordAidDis = e => {
-        if(!cash || !disbursementDate || !goodsValue || !outcome) {
+        if(!cash || !disbursementDate || !goodsValue) {
             e.preventDefault();
             if(!disbursementDate){
                 inputBlank('disbursementDate');
@@ -44,8 +45,6 @@ function RecordAidDisbursementModal(props) {
                 inputBlank('cash')
             } else if(!goodsValue) {
                 inputBlank('goodsValue')
-            } else if(!outcome) {
-                inputBlank('outcome')
             }
         } else {
             e.preventDefault();
@@ -65,8 +64,9 @@ function RecordAidDisbursementModal(props) {
                 const newTotalEstimatedValue = newTotalValue(goodsValue, props.totalValue);
                 props.setTotalOrgAppealCash(newTotalCash);
                 props.setTotalOrgAppealValue(newTotalEstimatedValue);
-                createDisbursement(disbursementDateObject, cash, goodsValue, props.appealDocID, props.orgAidAppDocID, newTotalCash, newTotalEstimatedValue, outcome);
+                createDisbursement(disbursementDateObject, cash, goodsValue, props.appealDocID, props.orgAidAppDocID, newTotalCash, newTotalEstimatedValue);
                 props.handleRecAidDisModalHide();
+                props.handleShowToast();
             }
         }
     }
@@ -107,10 +107,6 @@ function RecordAidDisbursementModal(props) {
                     setInput={setGoodsValue}
                     total={props.totalValue}
                     icon={faGifts}/>
-                <RecAidModalFormControl
-                    input='outcome'
-                    setInput={setOutcome}
-                    icon={faClipboardList}/>
                 <Button 
                     className='record-aidDisModalRecordBtn' 
                     onClick={handleRecordAidDis}

@@ -5,7 +5,11 @@ import { Form, InputGroup } from 'react-bootstrap';
 function RecordContributionFormControl(props) {
 
     const tooltipFormat = () => {
-        
+        if(props.input === 'estimatedValue') {
+            return ' that is more than 0'
+        } else if(props.input === 'amount') {
+            return ' that is more than 0'
+        }
     }
 
     const inputFilled = e => {
