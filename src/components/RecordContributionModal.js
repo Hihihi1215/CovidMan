@@ -102,9 +102,13 @@ function RecordContributionModal(props){
                 inputBlank('amount')
             }
         }else{
-            props.onShowConfimation()
-            props.onHide()
-            createCashContribution(paymentChannel, referenceNo, Number(amount), props.appealDocID)
+            if(numRegex.test(amount)){
+                props.onShowConfimation()
+                props.onHide()
+                createCashContribution(paymentChannel, referenceNo, Number(amount), props.appealDocID)
+            }else{
+                inputBlank('amount')
+            }
         }
     }
 
