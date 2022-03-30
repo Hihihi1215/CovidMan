@@ -7,6 +7,7 @@
   margin: 25px;
   height: 320px;
   animation: contribution-card-animate 0.3s linear;
+  white-space: normal;
 }
 
 @keyframes contribution-card-animate {
@@ -46,4 +47,10 @@
 
 .contribution-cardWrapper:hover .contribution-cardOnHover {
   display: block;
+}
+
+@media screen and (min-width: 576px) {
+  .contribution-cardWrapper {
+    display: inline-block;
+  }
 }

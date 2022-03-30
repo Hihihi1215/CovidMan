@@ -1,4 +1,3 @@
-import logo from '../logo.svg';
 import '../css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
@@ -20,6 +19,7 @@ import OrganizeAidAppeal from './OrganizeAidAppeal';
 import OrganizeAppealConfirmationModal from '../components/OrganizeAppealConfirmationModal';
 import RecordContribution from './RecordContribution';
 import RecordOutcomeSuccess from '../components/RecordOutcomeSuccess';
+import SignUp from './SignUp';
 
 function App() {
 
@@ -41,6 +41,11 @@ function App() {
           <Route path='/SignIn' element={
             <>
               <SignIn/>
+            </>
+          }/>
+          <Route path='/SignUp' element={
+            <>
+              <SignUp/>
             </>
           }/>
           <Route path='/SelectOrg' element={
@@ -105,7 +110,9 @@ function App() {
           }/>
           <Route path='/ManageOrg' element={
             <>
-              <ManageOrganization/>
+              <ProtectedRoute>
+                <ManageOrganization/>
+              </ProtectedRoute>
             </>
           }/>
           <Route path='/ViewAppeals' element={

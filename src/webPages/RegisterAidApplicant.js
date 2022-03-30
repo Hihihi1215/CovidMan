@@ -6,7 +6,14 @@ import { useOrganisation } from '../OrganisationContext';
 
 function RegisterAidApplicant(props) {
 
-  const { orgName, orgDocID } = useOrganisation();
+  const location = useLocation();
+  let { orgName, orgDocID } = useOrganisation();
+
+  if(!orgName) {
+    const state = location.state;
+    orgName = state.orgName;
+    orgDocID = state.orgDocID;
+  }
 
   const blurThePage = () => {
     const registerAidApplicant = document.querySelector('.register-aidApplicant');
