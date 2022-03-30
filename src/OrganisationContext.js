@@ -12,7 +12,7 @@ export const useOrganisationUpdate = () => {
 }
 
 function OrganisationProvider({children}) {
-    const [ organisation, setOrganisation ] = useState({});
+    const [ organisation, setOrganisation ] = useState(null);
 
     const updateOrganisation = (orgObject) => {
         setOrganisation(orgObject);

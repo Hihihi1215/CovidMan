@@ -11,7 +11,7 @@ function RegisterAppValidation(props) {
         } else if(props.invalid === 'income'){
             return ' that is in the range of 0 - 999'
         } else if(props.invalid === 'mobileNo'){
-            return ' in the format of (60)XXXXXXXXX';
+            return ' in the format of (601)XXXXXXXX';
         } else {
             return '';
         }
