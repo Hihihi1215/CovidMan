@@ -2,15 +2,15 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import '../css/AidAppConfirmationModal.css';
-import { useUserAuth } from '../UserAuthContext';
+import { useUserAuth, useUserType } from '../UserAuthContext';
 
 function AidAppConfirmationModal() {
 
   const navigate = useNavigate();
-  const user = useUserAuth();
+  const userType = useUserType();
 
   const registerSuccess = () => {
-    if(user) {
+    if(userType === "orgRep") {
       navigate('/OrgRepHome', { replace: true });
     } else {
       navigate('/', { replace: true })

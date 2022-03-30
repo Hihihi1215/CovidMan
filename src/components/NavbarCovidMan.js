@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react'
 import { Button, Navbar, Offcanvas } from 'react-bootstrap';
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import '../css/Navbar.css'
 import { firebaseSignOut } from '../firebase';
 import { useUserAuth, useUserType } from '../UserAuthContext';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useOrganisation, useOrganisationUpdate } from '../OrganisationContext';
 
 function NavbarCovidMan() {
 
     const user = useUserAuth();
     const userType = useUserType();
     const navigate = useNavigate();
+    const orgContext = useOrganisation();
+    const updateOrg = useOrganisationUpdate();
+    console.log(orgContext)
 
     const navigateOrgRepHomeOrHome = () => {
         if(!user){
@@ -26,6 +30,7 @@ function NavbarCovidMan() {
 
     const signOut = () => {
         firebaseSignOut();
+        updateOrg(null);
         navigate('/', { replace : true});
     }
 
@@ -62,7 +67,7 @@ function NavbarCovidMan() {
                 className='website-logo'
                 onClick={navigateOrgRepHomeOrHome}/>
             {
-                !user?
+                (!user || !orgContext)?
                     (
                         <ul className='navbar-liWrapper'>
                             <li className='navbar-li'>
