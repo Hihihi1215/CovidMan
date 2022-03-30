@@ -55,7 +55,7 @@ function SignIn() {
                 });
               })
             } else if(res.userType === 'covidManAdmin') {
-              navigate(`/ManageOrg`)
+              navigate(`/ManageOrg`, {replace : true})
             } else {
               invalidSignIn('username');
             }

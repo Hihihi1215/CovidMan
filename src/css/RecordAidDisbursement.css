@@ -34,7 +34,7 @@
 }
 
 .record-aidDisbursementBody {
-  display: flex;
+  white-space: nowrap;
   height: 385px;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -55,6 +55,7 @@
   .record-aidDisHeadBodyWrapper {
     padding-left: 45px;
     padding-right: 45px;
+    margin-bottom: 100px;
   }
 
   .record-aidDisbursementHeader {
@@ -62,6 +63,12 @@
   }
 
   .record-aidDisbursementBody {
+    height: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .record-aidDisbursementDateWrapper {

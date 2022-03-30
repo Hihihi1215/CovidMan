@@ -8,6 +8,8 @@
   margin: 25px;
   height: 335px;
   animation: record-aid-app-card-animate 0.3s linear;
+  white-space: normal;
+  display: inline-block;
 }
 
 @keyframes record-aid-app-card-animate {

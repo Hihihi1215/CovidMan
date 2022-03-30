@@ -36,10 +36,10 @@
 
 @media screen and (min-width: 576px) {
   .view-orgAppOffContriWrapper {
-    display: flex;
     height: 400px;
     overflow-x: scroll;
     overflow-y: hidden;
+    white-space: nowrap;
   }
 
   .view-orgAppOffTitle {

@@ -47,7 +47,6 @@ function NavbarCovidMan() {
         window.addEventListener('scroll', e => {
             const scroll = window.scrollY;
             if(scroll > 0 ) {
-                console.log('hi')
                 navbarCovidMan.classList.add('navbar-covidman--black');
             } else {
                 navbarCovidMan.classList.remove('navbar-covidman--black');
@@ -92,7 +91,7 @@ function NavbarCovidMan() {
                         userType === "orgRep"?
                             (
                                 <>
-                                    <Link to='/OrgRepHome/RegisterApp' className='navbar-links orgRep-navbar-links'>Regiser Aid Applicant</Link>
+                                    <Link to='/OrgRepHome/RegisterApp' className='navbar-links orgRep-navbar-links'>Register Aid Applicant</Link>
                                     <Link to='/OrgRepHome/ViewOrgAppeals' className='navbar-links orgRep-navbar-links'>View Org Appeals</Link>
                                     <Link to='/OrgRepHome/OrganizeAidAppeal' className='navbar-links orgRep-navbar-links'>Organize Aid Appeal</Link>
                                     <Link to='/OrgRepHome/RecordContribution' className='navbar-links orgRep-navbar-links'>Record Contribution</Link>

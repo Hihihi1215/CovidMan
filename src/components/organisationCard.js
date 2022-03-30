@@ -10,8 +10,8 @@ function OrganisationCard(props) {
 
   const fromSelectOrgToRegApp = () => {
     navigate(
-      '/RegisterApp',
-      { state : { orgName : props.orgName, orgDocID : props.orgDocID } }
+      '/OrgRepHome/RegisterApp',
+      { state : { orgName : props.orgName, orgDocID : props.orgDocID, fromSelectOrg : true } }
     );
   }
 

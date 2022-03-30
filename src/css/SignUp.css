@@ -1,0 +1,56 @@
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-as__wrapper {
+  width: 50%;
+  text-align: center;
+}
+
+.signup-as__wrapper > h3 {
+  color: #43c9ff;
+  margin-bottom: 50px;
+}
+
+.signup-page__links {
+  text-decoration: none;
+  display: block;
+  font-weight: bold;
+  width: 180px;
+  padding: 10px;
+  margin: 20px auto;
+  transition: all 0.1s ease-in-out;
+  border-radius: 50px;
+  border: 3px solid;
+}
+
+.signup-page__links--admin {
+  border: 3px solid #43c9ff;
+  border-radius: 50px;
+  color: #43c9ff;
+}
+
+.signup-page__links--admin:hover {
+  border-color: transparent;
+  color: #43c9ff;
+}
+
+.signup-page__links--aid-app {
+  background-color: #43c9ff;
+  color: white;
+}
+
+.signup-page__links--aid-app:hover {
+  background-color: white;
+  color: #43c9ff;
+  border-color: transparent;
+}
+
+@media screen and (min-width: 992px) {
+  .signup-as__body {
+    display: flex;
+  }
+}
